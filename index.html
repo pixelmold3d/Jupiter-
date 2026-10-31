@@ -1,0 +1,1949 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swift Review 5★ — Zero-Backend QR Review Studio & Customer Experience</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .phone-frame {
+      border: 10px solid #1e293b;
+      border-radius: 2.5rem;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25);
+      background: #ffffff;
+      overflow: hidden;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    @keyframes pulseSubtle {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    .animate-pulse-subtle {
+      animation: pulseSubtle 2.4s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+
+  <!-- Top Navigation & View Mode Switcher -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-extrabold shadow-sm">
+          5★
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-slate-900 text-base sm:text-lg leading-tight">Swift Review</h1>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              662 Indian City Categories • Zero-Backend
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">Instant QR Review Generator across 23 Sectors & 662 Business/Service Types</p>
+        </div>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs sm:text-sm font-medium">
+        <button id="tabSplitBtn" type="button" class="px-3 py-1.5 rounded-lg transition-all bg-white text-slate-900 shadow-sm font-semibold">
+          Split Studio (Both)
+        </button>
+        <button id="tabMerchantBtn" type="button" class="px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+          Merchant Setup & QR
+        </button>
+        <button id="tabCustomerBtn" type="button" class="px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900">
+          Customer Phone View
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive 5-Step Progress Ribbon -->
+  <section class="bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white px-4 py-3 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs">
+        <button type="button" data-step-action="1" class="step-pill flex items-center gap-2 p-2 rounded-lg bg-white/10 hover:bg-white/15 transition text-left">
+          <span class="w-5 h-5 rounded-full bg-amber-400 text-slate-950 font-bold flex items-center justify-center shrink-0">1</span>
+          <div class="truncate">
+            <div class="font-semibold text-white">Quick Scan</div>
+            <div class="text-slate-300 text-[11px] truncate">Scan QR, no app needed</div>
+          </div>
+        </button>
+        <button type="button" data-step-action="2" class="step-pill flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-left">
+          <span class="w-5 h-5 rounded-full bg-indigo-400/30 text-amber-300 font-bold flex items-center justify-center shrink-0">2</span>
+          <div class="truncate">
+            <div class="font-semibold text-white">Simple Input</div>
+            <div class="text-slate-300 text-[11px] truncate">Pick item/service & keyword</div>
+          </div>
+        </button>
+        <button type="button" data-step-action="3" class="step-pill flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-left">
+          <span class="w-5 h-5 rounded-full bg-indigo-400/30 text-amber-300 font-bold flex items-center justify-center shrink-0">3</span>
+          <div class="truncate">
+            <div class="font-semibold text-white">Instant Review</div>
+            <div class="text-slate-300 text-[11px] truncate">Smart natural 5★ comment</div>
+          </div>
+        </button>
+        <button type="button" data-step-action="4" class="step-pill flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-left">
+          <span class="w-5 h-5 rounded-full bg-indigo-400/30 text-amber-300 font-bold flex items-center justify-center shrink-0">4</span>
+          <div class="truncate">
+            <div class="font-semibold text-white">Move to Google</div>
+            <div class="text-slate-300 text-[11px] truncate">Auto-copies text in 1 tap</div>
+          </div>
+        </button>
+        <button type="button" data-step-action="5" class="step-pill col-span-2 sm:col-span-1 flex items-center gap-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-left">
+          <span class="w-5 h-5 rounded-full bg-emerald-400 text-slate-950 font-bold flex items-center justify-center shrink-0">5</span>
+          <div class="truncate">
+            <div class="font-semibold text-white">Final 5★ Post</div>
+            <div class="text-slate-300 text-[11px] truncate">Paste & submit on Google</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+    <div id="mainGrid" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- LEFT COLUMN: MERCHANT DASHBOARD & QR STUDIO -->
+      <section id="merchantPanel" class="lg:col-span-7 space-y-6">
+        <!-- Quick Demo Presets Bar -->
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div>
+              <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                Swift Review — Merchant Dashboard
+              </h2>
+              <p class="text-xs text-slate-500">Choose from all 23 Sectors & 662 Indian City Categories or try a sample preset below.</p>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <button type="button" data-preset="bengali" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-orange-50 text-orange-800 border border-orange-200 hover:bg-orange-100 transition">
+                🍛 Bengali Restaurant
+              </button>
+              <button type="button" data-preset="cafe" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition">
+                ☕ Café & Bakery
+              </button>
+              <button type="button" data-preset="salon" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-pink-50 text-pink-800 border border-pink-200 hover:bg-pink-100 transition">
+                ✂️ Salon & Spa
+              </button>
+              <button type="button" data-preset="dental" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-sky-50 text-sky-800 border border-sky-200 hover:bg-sky-100 transition">
+                🦷 Dental Clinic
+              </button>
+              <button type="button" data-preset="electronics" class="preset-btn px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-50 text-indigo-800 border border-indigo-200 hover:bg-indigo-100 transition">
+                📱 Gadget Store
+              </button>
+            </div>
+          </div>
+
+          <div class="space-y-4 pt-2 border-t border-slate-100">
+            <!-- 1. Name of Business -->
+            <div>
+              <label for="merchantNameInput" class="block text-xs font-semibold text-slate-700 mb-1">
+                1. Name of Business <span class="text-rose-500">*</span>
+              </label>
+              <input
+                id="merchantNameInput"
+                type="text"
+                placeholder="e.g., Koshe Kosha Heritage Kitchen / Aura Unisex Salon"
+                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              />
+            </div>
+
+            <!-- 2. Google Review Link -->
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <label for="googleLinkInput" class="block text-xs font-semibold text-slate-700">
+                  2. Google Review Link or Google Place ID
+                </label>
+                <span class="text-[11px] text-indigo-600 font-medium">Auto-formats for 5★ Google Review</span>
+              </div>
+              <input
+                id="googleLinkInput"
+                type="text"
+                placeholder="https://search.google.com/local/writereview?placeid=... or Google Maps URL"
+                class="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+            </div>
+
+            <!-- 3. Business or Service Provider -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-semibold text-slate-700">
+                  3. Business or Service Provider <span class="text-slate-400 font-normal">(Factor #1 for Smart Comment)</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 cursor-pointer">
+                  <input id="showAllCategoriesCheckbox" type="checkbox" checked class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" />
+                  <span>Show all 23 Sectors (662 Categories)</span>
+                </label>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  id="entityBusinessBtn"
+                  class="entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 text-left transition"
+                >
+                  <div class="w-9 h-9 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center text-lg shrink-0">
+                    🛍️
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-slate-900">Business (Products & Retail)</div>
+                    <div class="text-xs text-slate-500">Restaurants, Shops, Showrooms</div>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  id="entityServiceBtn"
+                  class="entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 text-left transition"
+                >
+                  <div class="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center text-lg shrink-0">
+                    🤝
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-slate-900">Service Provider</div>
+                    <div class="text-xs text-slate-500">Salons, Clinics, Repairs, Agencies</div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- 4. Sector Filter + Search + Type of Business / Services (All 662 Categories) -->
+            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <label for="categorySelect" class="block text-xs font-bold text-slate-800">
+                  4. <span id="categoryLabelText">Type of Business / Service</span> <span class="text-indigo-600 font-semibold">(All 662 Categories across 23 Sectors — Factor #2)</span>
+                </label>
+                <span id="categoryMatchCountBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800">
+                  662 categories available
+                </span>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <!-- Sector Dropdown (1 to 23) -->
+                <div>
+                  <label for="sectorSelect" class="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Filter by Sector (1–23)
+                  </label>
+                  <select
+                    id="sectorSelect"
+                    class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  ></select>
+                </div>
+
+                <!-- Search across 662 Categories -->
+                <div>
+                  <label for="categorySearchInput" class="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Quick Search Category (by name or #1–662)
+                  </label>
+                  <input
+                    id="categorySearchInput"
+                    type="text"
+                    placeholder="Type e.g. Biryani, Saree, Dental, CA, Gym..."
+                    class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <!-- Specific Category Select (#1 to #662) -->
+                <div>
+                  <label for="categorySelect" class="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Select Category (#1 – #662)
+                  </label>
+                  <select
+                    id="categorySelect"
+                    class="w-full px-3 py-2.5 rounded-xl border border-indigo-300 text-xs sm:text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  ></select>
+                </div>
+
+                <!-- Custom Specialty Input -->
+                <div>
+                  <label for="customCategoryInput" class="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Specialty / Neighborhood Note (Optional)
+                  </label>
+                  <input
+                    id="customCategoryInput"
+                    type="text"
+                    placeholder="e.g., Authentic Kolkata Kosha Mangsho & Mughlai"
+                    class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Name of items sold / services provided by the merchant -->
+            <div>
+              <div class="flex flex-wrap items-center justify-between gap-1 mb-1.5">
+                <label for="newItemInput" class="block text-xs font-semibold text-slate-700">
+                  5. Items Sold / Services Provided <span class="text-slate-400 font-normal">(Factor #3 — Customers tap what they got)</span>
+                </label>
+                <button
+                  type="button"
+                  id="loadSuggestedItemsBtn"
+                  class="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition"
+                >
+                  + Load Suggested Offerings
+                </button>
+              </div>
+
+              <div class="flex gap-2 mb-3">
+                <input
+                  id="newItemInput"
+                  type="text"
+                  placeholder="Add a product or service (e.g., Mutton Biryani, Bridal Makeup, GST Filing)..."
+                  class="flex-1 px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <button
+                  type="button"
+                  id="addItemBtn"
+                  class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition shrink-0"
+                >
+                  Add Offering
+                </button>
+              </div>
+
+              <!-- Active Merchant Offerings Chips -->
+              <div id="merchantItemsContainer" class="flex flex-wrap gap-2 p-3 rounded-xl bg-slate-50 border border-slate-200 min-h-[56px]"></div>
+            </div>
+
+            <!-- PROMINENT GENERATE BUTTON FOR QR & LINK -->
+            <div class="pt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3">
+              <div class="text-xs text-slate-600">
+                Ready to create your customer review link and table-top QR code?
+              </div>
+              <button
+                type="button"
+                id="generateQrBtn"
+                class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-indigo-600 hover:from-indigo-700 hover:to-violet-700 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition flex items-center gap-2"
+              >
+                <span>⚡ Generate</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- QR CODE & ZERO-BACKEND SHARING STUDIO -->
+        <div id="qrStudioBox" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm transition-all">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800">
+                  Step 1 Ready: Swift Review QR
+                </span>
+                <span id="qrGeneratedTimestamp" class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  Live & Synced
+                </span>
+              </div>
+              <h3 class="text-base font-bold text-slate-900">Your Swift Review QR Code & Customer Link</h3>
+              <p class="text-xs text-slate-500">
+                All merchant settings are encoded inside the QR link—zero backend servers required.
+              </p>
+            </div>
+
+            <!-- QR Target Mode Selector -->
+            <div class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs">
+              <button type="button" id="qrModeSmartBtn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-sm transition">
+                Smart Review Page QR
+              </button>
+              <button type="button" id="qrModeDirectBtn" class="px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+                Direct Google Link QR
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center">
+            <!-- Printable Standee Preview Card -->
+            <div class="md:col-span-5 flex flex-col items-center">
+              <div id="standeeCard" class="w-full max-w-[240px] bg-gradient-to-b from-slate-900 via-indigo-950 to-slate-900 text-white rounded-2xl p-4 text-center shadow-lg border border-indigo-500/30">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-amber-400 mb-0.5">SWIFT REVIEW • 5★</div>
+                <div id="qrCardBusinessName" class="text-sm font-extrabold text-white truncate mb-0.5">Koshe Kosha Heritage Kitchen</div>
+                <div id="qrCardCategorySub" class="text-[11px] text-indigo-200 truncate mb-2">#5 Bengali Restaurants</div>
+                <div class="bg-white p-3 rounded-xl inline-block mx-auto shadow-inner">
+                  <div id="qrCodeCanvasWrap" class="w-36 h-36 flex items-center justify-center mx-auto"></div>
+                </div>
+                <div class="mt-2.5 flex items-center justify-center gap-1 text-amber-400 text-xs font-bold">
+                  <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                </div>
+                <p class="text-[11px] text-slate-300 mt-1 leading-snug">
+                  Scan with your phone camera to generate & post a 5★ Google review in 10 seconds!
+                </p>
+              </div>
+            </div>
+
+            <!-- QR Controls & Test Actions -->
+            <div class="md:col-span-7 space-y-3">
+              <div class="p-3 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                <div class="text-xs font-bold text-indigo-950 mb-1">Test & Share Your Swift Review QR:</div>
+                <p class="text-xs text-indigo-800 leading-relaxed mb-2.5">
+                  Click <strong>Generate</strong> whenever you update your shop details, then scan the QR code or click <strong>Simulate Customer QR Scan</strong> to try the customer phone view!
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    id="simulateScanBtn"
+                    class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-sm transition flex items-center gap-1.5"
+                  >
+                    <span>📱 Simulate Customer QR Scan</span>
+                  </button>
+                  <button
+                    type="button"
+                    id="downloadQrPngBtn"
+                    class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 text-xs font-semibold transition"
+                  >
+                    ⬇ Download QR Standee (PNG)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Generated Link Preview & Copy -->
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <label for="shareUrlPreview" class="text-[11px] font-semibold text-slate-600">
+                    Generated Swift Review Link (Zero-Backend Shareable URL)
+                  </label>
+                  <button type="button" id="copyShareUrlBtn" class="text-[11px] font-bold text-indigo-600 hover:text-indigo-800">
+                    Copy Customer Link
+                  </button>
+                </div>
+                <div class="flex gap-1.5">
+                  <input
+                    id="shareUrlPreview"
+                    type="text"
+                    readonly
+                    class="flex-1 px-3 py-2 rounded-lg bg-slate-100 border border-slate-200 text-[11px] text-slate-700 font-mono"
+                  />
+                  <button
+                    type="button"
+                    id="openGeneratedLinkBtn"
+                    class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shrink-0 transition"
+                    title="Test opening this generated link in Customer View"
+                  >
+                    Try Link ↗
+                  </button>
+                </div>
+                <p id="qrModeHintText" class="text-[11px] text-slate-500 mt-1">
+                  Smart Review Generator Mode: Encodes your business name, category, and offerings directly inside the link (#customer?cfg=...) with zero backend.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: CUSTOMER PHONE DASHBOARD (STEPS 1 TO 5) -->
+      <section id="customerPanel" class="lg:col-span-5 flex flex-col items-center">
+        <div class="w-full max-w-[410px]">
+          <!-- Phone Status Banner -->
+          <div class="flex items-center justify-between px-3 mb-2">
+            <span class="text-xs font-bold text-slate-600 uppercase tracking-wider flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              Swift Review — Customer Phone
+            </span>
+            <span id="customerStepBadge" class="text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
+              Step 2 & 3: Select & Generate
+            </span>
+          </div>
+
+          <!-- Smartphone Mockup Frame -->
+          <div class="phone-frame w-full bg-white flex flex-col">
+            <!-- Phone Top Speaker Bar -->
+            <div class="bg-slate-900 text-white px-5 py-2.5 flex items-center justify-between text-[11px]">
+              <span class="font-semibold">Swift Review</span>
+              <div class="w-16 h-3 bg-slate-800 rounded-full"></div>
+              <span class="text-emerald-400 font-semibold">5G 100%</span>
+            </div>
+
+            <!-- Customer App Content -->
+            <div class="p-4 sm:p-5 space-y-4 bg-gradient-to-b from-amber-50/40 via-white to-white flex-1">
+              <!-- Merchant Header on Customer Phone -->
+              <div class="text-center border-b border-slate-100 pb-3.5">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100/80 text-amber-900 mb-1.5">
+                  <span id="custEntityBadge">Business</span> • <span id="custCategoryBadge">Bengali Restaurants</span>
+                </div>
+                <h2 id="custBusinessTitle" class="text-lg font-extrabold text-slate-900 leading-snug">
+                  Koshe Kosha Heritage Kitchen
+                </h2>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  Tap what you tried below & Swift Review will craft a natural 5★ review!
+                </p>
+
+                <!-- Interactive 5-Star Rating Bar (Default 5 Stars) -->
+                <div class="mt-2.5 flex flex-col items-center">
+                  <div id="starRatingBar" class="flex items-center gap-1.5">
+                    <button type="button" data-star="1" class="star-btn text-2xl text-amber-400 hover:scale-110 transition">★</button>
+                    <button type="button" data-star="2" class="star-btn text-2xl text-amber-400 hover:scale-110 transition">★</button>
+                    <button type="button" data-star="3" class="star-btn text-2xl text-amber-400 hover:scale-110 transition">★</button>
+                    <button type="button" data-star="4" class="star-btn text-2xl text-amber-400 hover:scale-110 transition">★</button>
+                    <button type="button" data-star="5" class="star-btn text-2xl text-amber-400 hover:scale-110 transition">★</button>
+                  </div>
+                  <span id="starRatingCaption" class="text-[11px] font-semibold text-amber-700 mt-0.5">
+                    5.0 ★ — Loved it! Highly Recommended
+                  </span>
+                </div>
+              </div>
+
+              <!-- STEP 2A: Select Services / Products Purchased -->
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label class="text-xs font-bold text-slate-800">
+                    1. Select product purchased / service received:
+                  </label>
+                  <span id="selectedCountBadge" class="text-[11px] font-semibold text-indigo-600">2 selected</span>
+                </div>
+                <div id="customerOfferingsList" class="flex flex-wrap gap-1.5"></div>
+              </div>
+
+              <!-- STEP 2B: Experience Highlights & Quick Keyword -->
+              <div class="space-y-2.5">
+                <div>
+                  <label class="block text-xs font-bold text-slate-800 mb-1.5">
+                    2. Pick what stood out <span class="text-slate-400 font-normal">(Optional)</span>
+                  </label>
+                  <div id="vibeTagsContainer" class="flex flex-wrap gap-1.5"></div>
+                </div>
+
+                <div>
+                  <label for="customerKeywordInput" class="block text-xs font-bold text-slate-800 mb-1">
+                    3. Type a quick keyword or staff name <span class="text-slate-400 font-normal">(Optional)</span>
+                  </label>
+                  <input
+                    id="customerKeywordInput"
+                    type="text"
+                    placeholder="e.g., authentic taste, polite staff, quick delivery..."
+                    class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </div>
+              </div>
+
+              <!-- STEP 3: Instant Smart Review Creation -->
+              <div class="bg-slate-50 rounded-2xl p-3.5 border border-slate-200 space-y-2.5">
+                <div class="flex flex-wrap items-center justify-between gap-1.5">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs font-bold text-slate-800">✨ Swift Review Comment</span>
+                    <span id="reviewTonePill" class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">
+                      Natural & Warm
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-1">
+                    <button
+                      type="button"
+                      id="cycleToneBtn"
+                      class="px-2 py-1 rounded-lg text-[11px] font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 transition"
+                      title="Switch writing tone"
+                    >
+                      🎭 Change Style
+                    </button>
+                    <button
+                      type="button"
+                      id="regenerateReviewBtn"
+                      class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-indigo-600 text-white hover:bg-indigo-700 transition flex items-center gap-1"
+                    >
+                      🔄 New Variation
+                    </button>
+                  </div>
+                </div>
+
+                <textarea
+                  id="generatedReviewTextarea"
+                  rows="4"
+                  class="w-full p-2.5 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-800 leading-relaxed focus:outline-none focus:ring-2 focus:ring-indigo-500 custom-scrollbar"
+                ></textarea>
+
+                <!-- Context Transparency Pill showing the 3 Factors used -->
+                <div id="contextBreakdownBar" class="text-[11px] text-slate-500 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200/80 flex flex-wrap items-center gap-1">
+                </div>
+              </div>
+
+              <!-- STEP 4 & 5: One-Click Copy & Open Google Review Page -->
+              <div class="pt-1 space-y-2">
+                <button
+                  type="button"
+                  id="postToGoogleBtn"
+                  class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 animate-pulse-subtle"
+                >
+                  <span>📋 Copy Review & Post 5★ on Google</span>
+                </button>
+                <p class="text-[11px] text-center text-slate-500">
+                  Automatically copies your comment and opens Google Maps set to 5★ so you just tap <strong>Paste & Post</strong>!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- STEP 5 GOOGLE REVIEW SIMULATOR & LAUNCH MODAL -->
+  <div id="googleModalBackdrop" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+      <!-- Top Copied Confirmation Banner -->
+      <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-2xl px-3.5 py-2.5">
+        <div class="flex items-center gap-2">
+          <span class="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">✓</span>
+          <div>
+            <div class="text-xs font-bold text-emerald-950">Step 4 Complete: Review Copied to Clipboard!</div>
+            <div class="text-[11px] text-emerald-700">Ready for 1-tap paste on Google Reviews</div>
+          </div>
+        </div>
+        <button type="button" id="closeGoogleModalBtn" class="text-slate-400 hover:text-slate-600 text-lg font-bold px-1">×</button>
+      </div>
+
+      <!-- Simulated Google Maps 5-Star Composer (Step 5 Preview + Direct Launch) -->
+      <div class="border border-slate-200 rounded-2xl p-4 space-y-3 bg-slate-50/50">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Step 5: Google Maps Review Page</div>
+            <h4 id="modalBusinessName" class="text-base font-bold text-slate-900">Koshe Kosha Heritage Kitchen</h4>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Swift Review → Google</span>
+        </div>
+
+        <!-- Pre-selected 5 Stars -->
+        <div class="flex items-center justify-center gap-2 py-1 bg-white rounded-xl border border-slate-200">
+          <span class="text-2xl text-amber-400">★</span>
+          <span class="text-2xl text-amber-400">★</span>
+          <span class="text-2xl text-amber-400">★</span>
+          <span class="text-2xl text-amber-400">★</span>
+          <span class="text-2xl text-amber-400">★</span>
+          <span class="text-xs font-bold text-slate-700 ml-1">5/5 Pre-Selected</span>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-semibold text-slate-600">Copied Review (Auto-Pasted Preview):</span>
+            <button type="button" id="reCopyModalBtn" class="text-[11px] font-bold text-blue-600 hover:underline">
+              Copy Again
+            </button>
+          </div>
+          <div id="modalReviewPreview" class="p-3 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 leading-relaxed max-h-32 overflow-y-auto"></div>
+        </div>
+
+        <!-- Action Buttons: Open Real Google Review Page OR Complete Simulated Post -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <a
+            id="openRealGoogleLink"
+            href="https://www.google.com/maps"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="py-2.5 px-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs text-center shadow-sm transition flex items-center justify-center gap-1.5"
+          >
+            <span>🚀 Open Google Review Page</span>
+          </a>
+          <button
+            type="button"
+            id="simulateFinalPostBtn"
+            class="py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs text-center shadow-sm transition"
+          >
+            ✨ Test Instant Submit Here
+          </button>
+        </div>
+
+        <div id="simulatedSuccessBanner" class="hidden p-3 rounded-xl bg-amber-50 border border-amber-200 text-center">
+          <div class="text-sm font-extrabold text-amber-900">🎉 5-Star Review Posted Successfully!</div>
+          <p class="text-xs text-amber-800 mt-0.5">Thank you for supporting <span id="successBizName" class="font-semibold"></span> via Swift Review!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastBanner" class="fixed bottom-4 right-4 z-50 hidden bg-slate-900 text-white px-4 py-2.5 rounded-xl shadow-lg text-xs font-semibold flex items-center gap-2 border border-slate-700">
+    <span class="text-emerald-400 font-bold">✓</span>
+    <span id="toastText">Copied to clipboard!</span>
+  </div>
+
+  <script>
+    // =========================================================================
+    // 1. ALL 23 INDIAN CITY SECTORS & 662 CATEGORIES CATALOG
+    // =========================================================================
+    const LEGACY_COMPAT_IDS = [
+      { id: 'Cafe & Bakery' },
+      { id: 'Restaurant & Dining' },
+      { id: 'Retail & Fashion Boutique' },
+      { id: 'Electronics & Gadget Store' },
+      { id: 'Grocery & Organic Supermarket' },
+      { id: 'Salon, Spa & Grooming' },
+      { id: 'Healthcare & Dental Clinic' },
+      { id: 'Auto Care & Detailing' },
+      { id: 'Home Repair & Interior Services' },
+      { id: 'Fitness, Yoga & Coaching Studio' }
+    ];
+
+    const SECTORS_DATA = [{"sectorId": 1, "sectorName": "1. Restaurants, Food & Hospitality", "defaultEntity": "business", "categories": [{"num": 1, "name": "Fine-Dining Restaurants", "label": "#1 Fine-Dining Restaurants"}, {"num": 2, "name": "Casual-Dining Restaurants", "label": "#2 Casual-Dining Restaurants"}, {"num": 3, "name": "Family Restaurants", "label": "#3 Family Restaurants"}, {"num": 4, "name": "Multi-Cuisine Restaurants", "label": "#4 Multi-Cuisine Restaurants"}, {"num": 5, "name": "Bengali Restaurants", "label": "#5 Bengali Restaurants"}, {"num": 6, "name": "North Indian Restaurants", "label": "#6 North Indian Restaurants"}, {"num": 7, "name": "South Indian Restaurants", "label": "#7 South Indian Restaurants"}, {"num": 8, "name": "Chinese Restaurants", "label": "#8 Chinese Restaurants"}, {"num": 9, "name": "Italian Restaurants", "label": "#9 Italian Restaurants"}, {"num": 10, "name": "Japanese Restaurants", "label": "#10 Japanese Restaurants"}, {"num": 11, "name": "Continental Restaurants", "label": "#11 Continental Restaurants"}, {"num": 12, "name": "Mughlai Restaurants", "label": "#12 Mughlai Restaurants"}, {"num": 13, "name": "Seafood Restaurants", "label": "#13 Seafood Restaurants"}, {"num": 14, "name": "Biryani Outlets", "label": "#14 Biryani Outlets"}, {"num": 15, "name": "Pizza Outlets", "label": "#15 Pizza Outlets"}, {"num": 16, "name": "Burger Outlets", "label": "#16 Burger Outlets"}, {"num": 17, "name": "Fast-Food Outlets", "label": "#17 Fast-Food Outlets"}, {"num": 18, "name": "Cafes", "label": "#18 Cafes"}, {"num": 19, "name": "Coffee Shops", "label": "#19 Coffee Shops"}, {"num": 20, "name": "Tea Cafes", "label": "#20 Tea Cafes"}, {"num": 21, "name": "Bakeries", "label": "#21 Bakeries"}, {"num": 22, "name": "Cake Shops", "label": "#22 Cake Shops"}, {"num": 23, "name": "Sweet Shops", "label": "#23 Sweet Shops"}, {"num": 24, "name": "Ice Cream Parlours", "label": "#24 Ice Cream Parlours"}, {"num": 25, "name": "Dessert Shops", "label": "#25 Dessert Shops"}, {"num": 26, "name": "Juice Bars", "label": "#26 Juice Bars"}, {"num": 27, "name": "Smoothie Bars", "label": "#27 Smoothie Bars"}, {"num": 28, "name": "Street-Food Outlets", "label": "#28 Street-Food Outlets"}, {"num": 29, "name": "Food Courts", "label": "#29 Food Courts"}, {"num": 30, "name": "Cloud Kitchens", "label": "#30 Cloud Kitchens"}, {"num": 31, "name": "Pubs", "label": "#31 Pubs"}, {"num": 32, "name": "Bars", "label": "#32 Bars"}, {"num": 33, "name": "Lounges", "label": "#33 Lounges"}, {"num": 34, "name": "Microbreweries", "label": "#34 Microbreweries"}, {"num": 35, "name": "Catering Services", "label": "#35 Catering Services"}, {"num": 36, "name": "Outdoor Catering Services", "label": "#36 Outdoor Catering Services"}, {"num": 37, "name": "Banquet Halls", "label": "#37 Banquet Halls"}, {"num": 38, "name": "Wedding Venues", "label": "#38 Wedding Venues"}, {"num": 39, "name": "Hotels", "label": "#39 Hotels"}, {"num": 40, "name": "Boutique Hotels", "label": "#40 Boutique Hotels"}, {"num": 41, "name": "Resorts", "label": "#41 Resorts"}, {"num": 42, "name": "Guest Houses", "label": "#42 Guest Houses"}, {"num": 43, "name": "Hostels", "label": "#43 Hostels"}, {"num": 44, "name": "Serviced Apartments", "label": "#44 Serviced Apartments"}, {"num": 45, "name": "Bed-and-Breakfast Establishments", "label": "#45 Bed-and-Breakfast Establishments"}]}, {"sectorId": 2, "sectorName": "2. Beauty, Grooming & Personal Care", "defaultEntity": "service", "categories": [{"num": 46, "name": "Unisex Salons", "label": "#46 Unisex Salons"}, {"num": 47, "name": "Men’s Salons", "label": "#47 Men’s Salons"}, {"num": 48, "name": "Women’s Beauty Parlours", "label": "#48 Women’s Beauty Parlours"}, {"num": 49, "name": "Premium Hair Studios", "label": "#49 Premium Hair Studios"}, {"num": 50, "name": "Hair Spa Centres", "label": "#50 Hair Spa Centres"}, {"num": 51, "name": "Hair Transplant Clinics", "label": "#51 Hair Transplant Clinics"}, {"num": 52, "name": "Skin Clinics", "label": "#52 Skin Clinics"}, {"num": 53, "name": "Dermatology Clinics", "label": "#53 Dermatology Clinics"}, {"num": 54, "name": "Beauty Spas", "label": "#54 Beauty Spas"}, {"num": 55, "name": "Day Spas", "label": "#55 Day Spas"}, {"num": 56, "name": "Massage Centres", "label": "#56 Massage Centres"}, {"num": 57, "name": "Nail Studios", "label": "#57 Nail Studios"}, {"num": 58, "name": "Nail Art Studios", "label": "#58 Nail Art Studios"}, {"num": 59, "name": "Makeup Studios", "label": "#59 Makeup Studios"}, {"num": 60, "name": "Bridal Makeup Studios", "label": "#60 Bridal Makeup Studios"}, {"num": 61, "name": "Eyelash Extension Studios", "label": "#61 Eyelash Extension Studios"}, {"num": 62, "name": "Eyebrow Threading Studios", "label": "#62 Eyebrow Threading Studios"}, {"num": 63, "name": "Waxing Studios", "label": "#63 Waxing Studios"}, {"num": 64, "name": "Laser Hair Removal Centres", "label": "#64 Laser Hair Removal Centres"}, {"num": 65, "name": "Tattoo Studios", "label": "#65 Tattoo Studios"}, {"num": 66, "name": "Piercing Studios", "label": "#66 Piercing Studios"}, {"num": 67, "name": "Men’s Grooming Lounges", "label": "#67 Men’s Grooming Lounges"}, {"num": 68, "name": "Bridal Beauty Studios", "label": "#68 Bridal Beauty Studios"}, {"num": 69, "name": "Beauty Academies", "label": "#69 Beauty Academies"}, {"num": 70, "name": "Makeup Training Institutes", "label": "#70 Makeup Training Institutes"}, {"num": 71, "name": "Hairdressing Academies", "label": "#71 Hairdressing Academies"}, {"num": 72, "name": "Cosmetic Treatment Centres", "label": "#72 Cosmetic Treatment Centres"}]}, {"sectorId": 3, "sectorName": "3. Healthcare & Medical Services", "defaultEntity": "service", "categories": [{"num": 73, "name": "Private Hospitals", "label": "#73 Private Hospitals"}, {"num": 74, "name": "Multispeciality Hospitals", "label": "#74 Multispeciality Hospitals"}, {"num": 75, "name": "Nursing Homes", "label": "#75 Nursing Homes"}, {"num": 76, "name": "General Physician Clinics", "label": "#76 General Physician Clinics"}, {"num": 77, "name": "Specialist Clinics", "label": "#77 Specialist Clinics"}, {"num": 78, "name": "Dental Clinics", "label": "#78 Dental Clinics"}, {"num": 79, "name": "Orthodontic Clinics", "label": "#79 Orthodontic Clinics"}, {"num": 80, "name": "Eye Clinics", "label": "#80 Eye Clinics"}, {"num": 81, "name": "Eye Hospitals", "label": "#81 Eye Hospitals"}, {"num": 82, "name": "ENT Clinics", "label": "#82 ENT Clinics"}, {"num": 83, "name": "Orthopaedic Clinics", "label": "#83 Orthopaedic Clinics"}, {"num": 84, "name": "Physiotherapy Centres", "label": "#84 Physiotherapy Centres"}, {"num": 85, "name": "Chiropractic Clinics", "label": "#85 Chiropractic Clinics"}, {"num": 86, "name": "Gynaecology Clinics", "label": "#86 Gynaecology Clinics"}, {"num": 87, "name": "Paediatric Clinics", "label": "#87 Paediatric Clinics"}, {"num": 88, "name": "Fertility Clinics", "label": "#88 Fertility Clinics"}, {"num": 89, "name": "IVF Centres", "label": "#89 IVF Centres"}, {"num": 90, "name": "Diagnostic Centres", "label": "#90 Diagnostic Centres"}, {"num": 91, "name": "Pathology Laboratories", "label": "#91 Pathology Laboratories"}, {"num": 92, "name": "Radiology Centres", "label": "#92 Radiology Centres"}, {"num": 93, "name": "MRI and CT Scan Centres", "label": "#93 MRI and CT Scan Centres"}, {"num": 94, "name": "Dialysis Centres", "label": "#94 Dialysis Centres"}, {"num": 95, "name": "Rehabilitation Centres", "label": "#95 Rehabilitation Centres"}, {"num": 96, "name": "Mental Health Clinics", "label": "#96 Mental Health Clinics"}, {"num": 97, "name": "Speech Therapy Centres", "label": "#97 Speech Therapy Centres"}, {"num": 98, "name": "Occupational Therapy Centres", "label": "#98 Occupational Therapy Centres"}, {"num": 99, "name": "Pharmacies", "label": "#99 Pharmacies"}, {"num": 100, "name": "Medical Stores", "label": "#100 Medical Stores"}, {"num": 101, "name": "Surgical Equipment Shops", "label": "#101 Surgical Equipment Shops"}, {"num": 102, "name": "Hearing Aid Centres", "label": "#102 Hearing Aid Centres"}, {"num": 103, "name": "Optical Stores", "label": "#103 Optical Stores"}, {"num": 104, "name": "Contact Lens Stores", "label": "#104 Contact Lens Stores"}, {"num": 105, "name": "Medical Equipment Suppliers", "label": "#105 Medical Equipment Suppliers"}, {"num": 106, "name": "Home Healthcare Agencies", "label": "#106 Home Healthcare Agencies"}, {"num": 107, "name": "Nursing Services", "label": "#107 Nursing Services"}, {"num": 108, "name": "Ambulance Services", "label": "#108 Ambulance Services"}, {"num": 109, "name": "Home Sample Collection Services", "label": "#109 Home Sample Collection Services"}, {"num": 110, "name": "Elder Care Services", "label": "#110 Elder Care Services"}, {"num": 111, "name": "Veterinary Hospitals", "label": "#111 Veterinary Hospitals"}, {"num": 112, "name": "Veterinary Clinics", "label": "#112 Veterinary Clinics"}, {"num": 113, "name": "Pet Diagnostic Centres", "label": "#113 Pet Diagnostic Centres"}]}, {"sectorId": 4, "sectorName": "4. Fashion, Clothing & Accessories", "defaultEntity": "business", "categories": [{"num": 114, "name": "Men’s Clothing Stores", "label": "#114 Men’s Clothing Stores"}, {"num": 115, "name": "Women’s Clothing Stores", "label": "#115 Women’s Clothing Stores"}, {"num": 116, "name": "Children’s Clothing Stores", "label": "#116 Children’s Clothing Stores"}, {"num": 117, "name": "Ethnic Wear Stores", "label": "#117 Ethnic Wear Stores"}, {"num": 118, "name": "Saree Shops", "label": "#118 Saree Shops"}, {"num": 119, "name": "Bridal Wear Boutiques", "label": "#119 Bridal Wear Boutiques"}, {"num": 120, "name": "Designer Boutiques", "label": "#120 Designer Boutiques"}, {"num": 121, "name": "Fashion Boutiques", "label": "#121 Fashion Boutiques"}, {"num": 122, "name": "Footwear Stores", "label": "#122 Footwear Stores"}, {"num": 123, "name": "Sportswear Stores", "label": "#123 Sportswear Stores"}, {"num": 124, "name": "Lingerie Stores", "label": "#124 Lingerie Stores"}, {"num": 125, "name": "Tailoring Shops", "label": "#125 Tailoring Shops"}, {"num": 126, "name": "Custom Tailoring Studios", "label": "#126 Custom Tailoring Studios"}, {"num": 127, "name": "Suit and Tuxedo Stores", "label": "#127 Suit and Tuxedo Stores"}, {"num": 128, "name": "Uniform Suppliers", "label": "#128 Uniform Suppliers"}, {"num": 129, "name": "Fabric Stores", "label": "#129 Fabric Stores"}, {"num": 130, "name": "Gold Jewellery Stores", "label": "#130 Gold Jewellery Stores"}, {"num": 131, "name": "Diamond Jewellery Showrooms", "label": "#131 Diamond Jewellery Showrooms"}, {"num": 132, "name": "Silver Jewellery Stores", "label": "#132 Silver Jewellery Stores"}, {"num": 133, "name": "Artificial Jewellery Shops", "label": "#133 Artificial Jewellery Shops"}, {"num": 134, "name": "Watch Stores", "label": "#134 Watch Stores"}, {"num": 135, "name": "Sunglasses Stores", "label": "#135 Sunglasses Stores"}, {"num": 136, "name": "Handbag Stores", "label": "#136 Handbag Stores"}, {"num": 137, "name": "Leather Goods Stores", "label": "#137 Leather Goods Stores"}, {"num": 138, "name": "Luggage Stores", "label": "#138 Luggage Stores"}, {"num": 139, "name": "Fashion Accessory Shops", "label": "#139 Fashion Accessory Shops"}]}, {"sectorId": 5, "sectorName": "5. Electronics & Technology Retail", "defaultEntity": "business", "categories": [{"num": 140, "name": "Mobile Phone Stores", "label": "#140 Mobile Phone Stores"}, {"num": 141, "name": "Smartphone Showrooms", "label": "#141 Smartphone Showrooms"}, {"num": 142, "name": "Laptop Stores", "label": "#142 Laptop Stores"}, {"num": 143, "name": "Computer Shops", "label": "#143 Computer Shops"}, {"num": 144, "name": "Computer Repair Centres", "label": "#144 Computer Repair Centres"}, {"num": 145, "name": "Electronics Showrooms", "label": "#145 Electronics Showrooms"}, {"num": 146, "name": "Television Stores", "label": "#146 Television Stores"}, {"num": 147, "name": "Home Appliance Stores", "label": "#147 Home Appliance Stores"}, {"num": 148, "name": "Camera Stores", "label": "#148 Camera Stores"}, {"num": 149, "name": "Gaming Stores", "label": "#149 Gaming Stores"}, {"num": 150, "name": "Audio Equipment Stores", "label": "#150 Audio Equipment Stores"}, {"num": 151, "name": "Mobile Accessory Shops", "label": "#151 Mobile Accessory Shops"}, {"num": 152, "name": "Mobile Repair Shops", "label": "#152 Mobile Repair Shops"}, {"num": 153, "name": "Printer and Cartridge Shops", "label": "#153 Printer and Cartridge Shops"}, {"num": 154, "name": "CCTV Equipment Stores", "label": "#154 CCTV Equipment Stores"}, {"num": 155, "name": "Networking Equipment Stores", "label": "#155 Networking Equipment Stores"}, {"num": 156, "name": "Smart Home Equipment Stores", "label": "#156 Smart Home Equipment Stores"}, {"num": 157, "name": "Electronic Components Shops", "label": "#157 Electronic Components Shops"}, {"num": 158, "name": "Computer Peripheral Stores", "label": "#158 Computer Peripheral Stores"}]}, {"sectorId": 6, "sectorName": "6. Home, Lifestyle & General Retail", "defaultEntity": "business", "categories": [{"num": 159, "name": "Furniture Showrooms", "label": "#159 Furniture Showrooms"}, {"num": 160, "name": "Mattress Stores", "label": "#160 Mattress Stores"}, {"num": 161, "name": "Home Decor Shops", "label": "#161 Home Decor Shops"}, {"num": 162, "name": "Lighting Showrooms", "label": "#162 Lighting Showrooms"}, {"num": 163, "name": "Kitchenware Stores", "label": "#163 Kitchenware Stores"}, {"num": 164, "name": "Hardware Stores", "label": "#164 Hardware Stores"}, {"num": 165, "name": "Paint Shops", "label": "#165 Paint Shops"}, {"num": 166, "name": "Sanitaryware Showrooms", "label": "#166 Sanitaryware Showrooms"}, {"num": 167, "name": "Tile Showrooms", "label": "#167 Tile Showrooms"}, {"num": 168, "name": "Marble and Granite Shops", "label": "#168 Marble and Granite Shops"}, {"num": 169, "name": "Flooring Stores", "label": "#169 Flooring Stores"}, {"num": 170, "name": "Curtain Shops", "label": "#170 Curtain Shops"}, {"num": 171, "name": "Home Furnishing Stores", "label": "#171 Home Furnishing Stores"}, {"num": 172, "name": "Carpet Shops", "label": "#172 Carpet Shops"}, {"num": 173, "name": "Gift Shops", "label": "#173 Gift Shops"}, {"num": 174, "name": "Toy Shops", "label": "#174 Toy Shops"}, {"num": 175, "name": "Bookstores", "label": "#175 Bookstores"}, {"num": 176, "name": "Stationery Shops", "label": "#176 Stationery Shops"}, {"num": 177, "name": "Art Supply Stores", "label": "#177 Art Supply Stores"}, {"num": 178, "name": "Musical Instrument Stores", "label": "#178 Musical Instrument Stores"}, {"num": 179, "name": "Sports Equipment Stores", "label": "#179 Sports Equipment Stores"}, {"num": 180, "name": "Bicycle Stores", "label": "#180 Bicycle Stores"}, {"num": 181, "name": "Flower Shops", "label": "#181 Flower Shops"}, {"num": 182, "name": "Plant Nurseries", "label": "#182 Plant Nurseries"}, {"num": 183, "name": "Pet Supply Stores", "label": "#183 Pet Supply Stores"}, {"num": 184, "name": "Organic Food Stores", "label": "#184 Organic Food Stores"}, {"num": 185, "name": "Gourmet Food Stores", "label": "#185 Gourmet Food Stores"}, {"num": 186, "name": "Supermarkets", "label": "#186 Supermarkets"}, {"num": 187, "name": "Department Stores", "label": "#187 Department Stores"}, {"num": 188, "name": "Convenience Stores", "label": "#188 Convenience Stores"}, {"num": 189, "name": "Grocery Stores", "label": "#189 Grocery Stores"}, {"num": 190, "name": "Dry Fruit Shops", "label": "#190 Dry Fruit Shops"}, {"num": 191, "name": "Imported Food Stores", "label": "#191 Imported Food Stores"}, {"num": 192, "name": "Liquor Retail Stores", "label": "#192 Liquor Retail Stores"}]}, {"sectorId": 7, "sectorName": "7. Automotive & Vehicle Services", "defaultEntity": "service", "categories": [{"num": 193, "name": "Car Dealerships", "label": "#193 Car Dealerships"}, {"num": 194, "name": "Two-Wheeler Dealerships", "label": "#194 Two-Wheeler Dealerships"}, {"num": 195, "name": "Used Car Dealers", "label": "#195 Used Car Dealers"}, {"num": 196, "name": "Used Bike Dealers", "label": "#196 Used Bike Dealers"}, {"num": 197, "name": "Electric Vehicle Showrooms", "label": "#197 Electric Vehicle Showrooms"}, {"num": 198, "name": "Car Rental Agencies", "label": "#198 Car Rental Agencies"}, {"num": 199, "name": "Self-Drive Car Rental Services", "label": "#199 Self-Drive Car Rental Services"}, {"num": 200, "name": "Motorcycle Rental Services", "label": "#200 Motorcycle Rental Services"}, {"num": 201, "name": "Driving Schools", "label": "#201 Driving Schools"}, {"num": 202, "name": "Car Service Centres", "label": "#202 Car Service Centres"}, {"num": 203, "name": "Multi-Brand Car Workshops", "label": "#203 Multi-Brand Car Workshops"}, {"num": 204, "name": "Authorised Automobile Service Centres", "label": "#204 Authorised Automobile Service Centres"}, {"num": 205, "name": "Two-Wheeler Repair Garages", "label": "#205 Two-Wheeler Repair Garages"}, {"num": 206, "name": "Electric Vehicle Repair Centres", "label": "#206 Electric Vehicle Repair Centres"}, {"num": 207, "name": "Tyre Shops", "label": "#207 Tyre Shops"}, {"num": 208, "name": "Wheel Alignment Centres", "label": "#208 Wheel Alignment Centres"}, {"num": 209, "name": "Wheel Balancing Centres", "label": "#209 Wheel Balancing Centres"}, {"num": 210, "name": "Battery Shops", "label": "#210 Battery Shops"}, {"num": 211, "name": "Car Accessory Stores", "label": "#211 Car Accessory Stores"}, {"num": 212, "name": "Car Detailing Studios", "label": "#212 Car Detailing Studios"}, {"num": 213, "name": "Car Washing Centres", "label": "#213 Car Washing Centres"}, {"num": 214, "name": "Bike Washing Centres", "label": "#214 Bike Washing Centres"}, {"num": 215, "name": "Denting and Painting Workshops", "label": "#215 Denting and Painting Workshops"}, {"num": 216, "name": "Car Wrapping Studios", "label": "#216 Car Wrapping Studios"}, {"num": 217, "name": "Car Modification Shops", "label": "#217 Car Modification Shops"}, {"num": 218, "name": "Auto Electrical Workshops", "label": "#218 Auto Electrical Workshops"}, {"num": 219, "name": "Automobile Spare Parts Shops", "label": "#219 Automobile Spare Parts Shops"}, {"num": 220, "name": "Motorcycle Accessory Stores", "label": "#220 Motorcycle Accessory Stores"}, {"num": 221, "name": "Windshield Repair Services", "label": "#221 Windshield Repair Services"}, {"num": 222, "name": "Puncture Repair Shops", "label": "#222 Puncture Repair Shops"}, {"num": 223, "name": "Roadside Assistance Providers", "label": "#223 Roadside Assistance Providers"}, {"num": 224, "name": "Vehicle Inspection Centres", "label": "#224 Vehicle Inspection Centres"}, {"num": 225, "name": "Commercial Vehicle Repair Workshops", "label": "#225 Commercial Vehicle Repair Workshops"}]}, {"sectorId": 8, "sectorName": "8. Real Estate, Construction & Interiors", "defaultEntity": "service", "categories": [{"num": 226, "name": "Real Estate Agencies", "label": "#226 Real Estate Agencies"}, {"num": 227, "name": "Property Brokers", "label": "#227 Property Brokers"}, {"num": 228, "name": "Residential Property Consultants", "label": "#228 Residential Property Consultants"}, {"num": 229, "name": "Commercial Property Consultants", "label": "#229 Commercial Property Consultants"}, {"num": 230, "name": "Luxury Property Dealers", "label": "#230 Luxury Property Dealers"}, {"num": 231, "name": "Property Management Companies", "label": "#231 Property Management Companies"}, {"num": 232, "name": "Real Estate Developers", "label": "#232 Real Estate Developers"}, {"num": 233, "name": "Builders", "label": "#233 Builders"}, {"num": 234, "name": "Construction Companies", "label": "#234 Construction Companies"}, {"num": 235, "name": "Interior Design Studios", "label": "#235 Interior Design Studios"}, {"num": 236, "name": "Architects", "label": "#236 Architects"}, {"num": 237, "name": "Structural Engineering Firms", "label": "#237 Structural Engineering Firms"}, {"num": 238, "name": "Civil Engineering Consultants", "label": "#238 Civil Engineering Consultants"}, {"num": 239, "name": "Home Renovation Contractors", "label": "#239 Home Renovation Contractors"}, {"num": 240, "name": "Modular Kitchen Studios", "label": "#240 Modular Kitchen Studios"}, {"num": 241, "name": "Bathroom Renovation Specialists", "label": "#241 Bathroom Renovation Specialists"}, {"num": 242, "name": "Home Automation Providers", "label": "#242 Home Automation Providers"}, {"num": 243, "name": "Waterproofing Contractors", "label": "#243 Waterproofing Contractors"}, {"num": 244, "name": "Painting Contractors", "label": "#244 Painting Contractors"}, {"num": 245, "name": "Plumbing Contractors", "label": "#245 Plumbing Contractors"}, {"num": 246, "name": "Electrical Contractors", "label": "#246 Electrical Contractors"}, {"num": 247, "name": "Pest Control Companies", "label": "#247 Pest Control Companies"}, {"num": 248, "name": "Deep Cleaning Services", "label": "#248 Deep Cleaning Services"}, {"num": 249, "name": "Housekeeping Agencies", "label": "#249 Housekeeping Agencies"}, {"num": 250, "name": "Packers and Movers", "label": "#250 Packers and Movers"}, {"num": 251, "name": "Home Shifting Services", "label": "#251 Home Shifting Services"}, {"num": 252, "name": "Rental Property Agencies", "label": "#252 Rental Property Agencies"}, {"num": 253, "name": "Co-Working Spaces", "label": "#253 Co-Working Spaces"}, {"num": 254, "name": "Commercial Office Rental Agencies", "label": "#254 Commercial Office Rental Agencies"}, {"num": 255, "name": "Property Valuation Consultants", "label": "#255 Property Valuation Consultants"}, {"num": 256, "name": "Home Inspection Services", "label": "#256 Home Inspection Services"}, {"num": 257, "name": "Glass and Aluminium Fabricators", "label": "#257 Glass and Aluminium Fabricators"}, {"num": 258, "name": "Roofing Contractors", "label": "#258 Roofing Contractors"}, {"num": 259, "name": "Flooring Contractors", "label": "#259 Flooring Contractors"}, {"num": 260, "name": "Building Material Suppliers", "label": "#260 Building Material Suppliers"}]}, {"sectorId": 9, "sectorName": "9. Education & Training", "defaultEntity": "service", "categories": [{"num": 261, "name": "Preschools", "label": "#261 Preschools"}, {"num": 262, "name": "Play Schools", "label": "#262 Play Schools"}, {"num": 263, "name": "Daycare Centres", "label": "#263 Daycare Centres"}, {"num": 264, "name": "Nursery Schools", "label": "#264 Nursery Schools"}, {"num": 265, "name": "Primary Schools", "label": "#265 Primary Schools"}, {"num": 266, "name": "Private Schools", "label": "#266 Private Schools"}, {"num": 267, "name": "Coaching Centres", "label": "#267 Coaching Centres"}, {"num": 268, "name": "Tuition Centres", "label": "#268 Tuition Centres"}, {"num": 269, "name": "Competitive Examination Institutes", "label": "#269 Competitive Examination Institutes"}, {"num": 270, "name": "UPSC Coaching Institutes", "label": "#270 UPSC Coaching Institutes"}, {"num": 271, "name": "SSC Coaching Institutes", "label": "#271 SSC Coaching Institutes"}, {"num": 272, "name": "Banking Examination Coaching Centres", "label": "#272 Banking Examination Coaching Centres"}, {"num": 273, "name": "Railway Examination Coaching Centres", "label": "#273 Railway Examination Coaching Centres"}, {"num": 274, "name": "JEE Coaching Centres", "label": "#274 JEE Coaching Centres"}, {"num": 275, "name": "NEET Coaching Centres", "label": "#275 NEET Coaching Centres"}, {"num": 276, "name": "CAT Coaching Institutes", "label": "#276 CAT Coaching Institutes"}, {"num": 277, "name": "IELTS Training Centres", "label": "#277 IELTS Training Centres"}, {"num": 278, "name": "Spoken English Institutes", "label": "#278 Spoken English Institutes"}, {"num": 279, "name": "Foreign Language Institutes", "label": "#279 Foreign Language Institutes"}, {"num": 280, "name": "Computer Training Centres", "label": "#280 Computer Training Centres"}, {"num": 281, "name": "Coding Academies", "label": "#281 Coding Academies"}, {"num": 282, "name": "Software Training Institutes", "label": "#282 Software Training Institutes"}, {"num": 283, "name": "Data Analytics Training Institutes", "label": "#283 Data Analytics Training Institutes"}, {"num": 284, "name": "Digital Marketing Institutes", "label": "#284 Digital Marketing Institutes"}, {"num": 285, "name": "Graphic Design Institutes", "label": "#285 Graphic Design Institutes"}, {"num": 286, "name": "Animation Institutes", "label": "#286 Animation Institutes"}, {"num": 287, "name": "Photography Schools", "label": "#287 Photography Schools"}, {"num": 288, "name": "Music Academies", "label": "#288 Music Academies"}, {"num": 289, "name": "Dance Academies", "label": "#289 Dance Academies"}, {"num": 290, "name": "Art Classes", "label": "#290 Art Classes"}, {"num": 291, "name": "Drawing Schools", "label": "#291 Drawing Schools"}, {"num": 292, "name": "Singing Classes", "label": "#292 Singing Classes"}, {"num": 293, "name": "Instrumental Music Classes", "label": "#293 Instrumental Music Classes"}, {"num": 294, "name": "Yoga Instructor Training Centres", "label": "#294 Yoga Instructor Training Centres"}, {"num": 295, "name": "Professional Skill Development Institutes", "label": "#295 Professional Skill Development Institutes"}, {"num": 296, "name": "Vocational Training Centres", "label": "#296 Vocational Training Centres"}, {"num": 297, "name": "Driving Schools", "label": "#297 Driving Schools"}, {"num": 298, "name": "Aviation Training Institutes", "label": "#298 Aviation Training Institutes"}, {"num": 299, "name": "Hospitality Training Institutes", "label": "#299 Hospitality Training Institutes"}, {"num": 300, "name": "Study Abroad Consultancies", "label": "#300 Study Abroad Consultancies"}, {"num": 301, "name": "Overseas Education Consultants", "label": "#301 Overseas Education Consultants"}]}, {"sectorId": 10, "sectorName": "10. Professional, Legal & Financial Services", "defaultEntity": "service", "categories": [{"num": 302, "name": "Chartered Accountant Firms", "label": "#302 Chartered Accountant Firms"}, {"num": 303, "name": "Tax Consultants", "label": "#303 Tax Consultants"}, {"num": 304, "name": "GST Consultants", "label": "#304 GST Consultants"}, {"num": 305, "name": "Accountancy Firms", "label": "#305 Accountancy Firms"}, {"num": 306, "name": "Bookkeeping Services", "label": "#306 Bookkeeping Services"}, {"num": 307, "name": "Company Registration Consultants", "label": "#307 Company Registration Consultants"}, {"num": 308, "name": "Business Registration Services", "label": "#308 Business Registration Services"}, {"num": 309, "name": "Financial Planning Firms", "label": "#309 Financial Planning Firms"}, {"num": 310, "name": "Insurance Agencies", "label": "#310 Insurance Agencies"}, {"num": 311, "name": "Loan Consultants", "label": "#311 Loan Consultants"}, {"num": 312, "name": "Mortgage Consultants", "label": "#312 Mortgage Consultants"}, {"num": 313, "name": "Investment Advisory Firms", "label": "#313 Investment Advisory Firms"}, {"num": 314, "name": "Legal Firms", "label": "#314 Legal Firms"}, {"num": 315, "name": "Independent Lawyers", "label": "#315 Independent Lawyers"}, {"num": 316, "name": "Property Lawyers", "label": "#316 Property Lawyers"}, {"num": 317, "name": "Corporate Law Firms", "label": "#317 Corporate Law Firms"}, {"num": 318, "name": "Intellectual Property Consultants", "label": "#318 Intellectual Property Consultants"}, {"num": 319, "name": "Trademark Registration Agencies", "label": "#319 Trademark Registration Agencies"}, {"num": 320, "name": "Patent Consultants", "label": "#320 Patent Consultants"}, {"num": 321, "name": "Notary Services", "label": "#321 Notary Services"}, {"num": 322, "name": "Documentation Centres", "label": "#322 Documentation Centres"}, {"num": 323, "name": "Banking Service Consultants", "label": "#323 Banking Service Consultants"}, {"num": 324, "name": "Foreign Exchange Services", "label": "#324 Foreign Exchange Services"}, {"num": 325, "name": "Financial Advisory Offices", "label": "#325 Financial Advisory Offices"}, {"num": 326, "name": "Mutual Fund Distributors", "label": "#326 Mutual Fund Distributors"}, {"num": 327, "name": "Pension Advisory Services", "label": "#327 Pension Advisory Services"}, {"num": 328, "name": "Money Transfer Services", "label": "#328 Money Transfer Services"}, {"num": 329, "name": "Loan Agencies", "label": "#329 Loan Agencies"}, {"num": 330, "name": "Gold Loan Providers", "label": "#330 Gold Loan Providers"}, {"num": 331, "name": "Microfinance Offices", "label": "#331 Microfinance Offices"}, {"num": 332, "name": "Credit Societies", "label": "#332 Credit Societies"}]}, {"sectorId": 11, "sectorName": "11. IT, Digital & Business Services", "defaultEntity": "service", "categories": [{"num": 333, "name": "Digital Marketing Agencies", "label": "#333 Digital Marketing Agencies"}, {"num": 334, "name": "SEO Agencies", "label": "#334 SEO Agencies"}, {"num": 335, "name": "Advertising Agencies", "label": "#335 Advertising Agencies"}, {"num": 336, "name": "Branding Agencies", "label": "#336 Branding Agencies"}, {"num": 337, "name": "Website Development Companies", "label": "#337 Website Development Companies"}, {"num": 338, "name": "Software Development Firms", "label": "#338 Software Development Firms"}, {"num": 339, "name": "IT Consulting Companies", "label": "#339 IT Consulting Companies"}, {"num": 340, "name": "Managed IT Service Providers", "label": "#340 Managed IT Service Providers"}, {"num": 341, "name": "Computer Networking Companies", "label": "#341 Computer Networking Companies"}, {"num": 342, "name": "Cybersecurity Consultants", "label": "#342 Cybersecurity Consultants"}, {"num": 343, "name": "Cloud Consulting Firms", "label": "#343 Cloud Consulting Firms"}, {"num": 344, "name": "Business Consulting Firms", "label": "#344 Business Consulting Firms"}, {"num": 345, "name": "Management Consulting Firms", "label": "#345 Management Consulting Firms"}, {"num": 346, "name": "HR Consulting Agencies", "label": "#346 HR Consulting Agencies"}, {"num": 347, "name": "Recruitment Agencies", "label": "#347 Recruitment Agencies"}, {"num": 348, "name": "Staffing Agencies", "label": "#348 Staffing Agencies"}, {"num": 349, "name": "Payroll Service Providers", "label": "#349 Payroll Service Providers"}, {"num": 350, "name": "Outsourcing Companies", "label": "#350 Outsourcing Companies"}, {"num": 351, "name": "BPO Service Providers", "label": "#351 BPO Service Providers"}, {"num": 352, "name": "Printing and Publishing Companies", "label": "#352 Printing and Publishing Companies"}, {"num": 353, "name": "Commercial Printing Shops", "label": "#353 Commercial Printing Shops"}, {"num": 354, "name": "Signboard Manufacturers", "label": "#354 Signboard Manufacturers"}, {"num": 355, "name": "Branding and Signage Shops", "label": "#355 Branding and Signage Shops"}, {"num": 356, "name": "Corporate Gifting Companies", "label": "#356 Corporate Gifting Companies"}, {"num": 357, "name": "Event Management Companies", "label": "#357 Event Management Companies"}, {"num": 358, "name": "Public Relations Agencies", "label": "#358 Public Relations Agencies"}, {"num": 359, "name": "Market Research Firms", "label": "#359 Market Research Firms"}, {"num": 360, "name": "Translation Agencies", "label": "#360 Translation Agencies"}, {"num": 361, "name": "Virtual Office Providers", "label": "#361 Virtual Office Providers"}, {"num": 362, "name": "Data Analytics Consulting Firms", "label": "#362 Data Analytics Consulting Firms"}, {"num": 363, "name": "Graphic Design Agencies", "label": "#363 Graphic Design Agencies"}, {"num": 364, "name": "Content Writing Agencies", "label": "#364 Content Writing Agencies"}, {"num": 365, "name": "Social Media Management Agencies", "label": "#365 Social Media Management Agencies"}, {"num": 366, "name": "App Development Companies", "label": "#366 App Development Companies"}, {"num": 367, "name": "E-commerce Consulting Agencies", "label": "#367 E-commerce Consulting Agencies"}, {"num": 368, "name": "Business Process Consulting Firms", "label": "#368 Business Process Consulting Firms"}]}, {"sectorId": 12, "sectorName": "12. Fitness, Sports & Wellness", "defaultEntity": "service", "categories": [{"num": 369, "name": "Gyms", "label": "#369 Gyms"}, {"num": 370, "name": "Premium Fitness Clubs", "label": "#370 Premium Fitness Clubs"}, {"num": 371, "name": "Personal Training Studios", "label": "#371 Personal Training Studios"}, {"num": 372, "name": "CrossFit Gyms", "label": "#372 CrossFit Gyms"}, {"num": 373, "name": "Yoga Studios", "label": "#373 Yoga Studios"}, {"num": 374, "name": "Pilates Studios", "label": "#374 Pilates Studios"}, {"num": 375, "name": "Zumba Studios", "label": "#375 Zumba Studios"}, {"num": 376, "name": "Dance Fitness Studios", "label": "#376 Dance Fitness Studios"}, {"num": 377, "name": "Martial Arts Academies", "label": "#377 Martial Arts Academies"}, {"num": 378, "name": "Boxing Gyms", "label": "#378 Boxing Gyms"}, {"num": 379, "name": "Swimming Pools", "label": "#379 Swimming Pools"}, {"num": 380, "name": "Swimming Academies", "label": "#380 Swimming Academies"}, {"num": 381, "name": "Sports Coaching Centres", "label": "#381 Sports Coaching Centres"}, {"num": 382, "name": "Badminton Academies", "label": "#382 Badminton Academies"}, {"num": 383, "name": "Tennis Academies", "label": "#383 Tennis Academies"}, {"num": 384, "name": "Football Academies", "label": "#384 Football Academies"}, {"num": 385, "name": "Cricket Academies", "label": "#385 Cricket Academies"}, {"num": 386, "name": "Basketball Academies", "label": "#386 Basketball Academies"}, {"num": 387, "name": "Table Tennis Academies", "label": "#387 Table Tennis Academies"}, {"num": 388, "name": "Indoor Sports Centres", "label": "#388 Indoor Sports Centres"}, {"num": 389, "name": "Rock Climbing Gyms", "label": "#389 Rock Climbing Gyms"}, {"num": 390, "name": "Adventure Sports Centres", "label": "#390 Adventure Sports Centres"}, {"num": 391, "name": "Wellness Centres", "label": "#391 Wellness Centres"}, {"num": 392, "name": "Meditation Centres", "label": "#392 Meditation Centres"}, {"num": 393, "name": "Nutrition Consulting Practices", "label": "#393 Nutrition Consulting Practices"}, {"num": 394, "name": "Dietitian Clinics", "label": "#394 Dietitian Clinics"}, {"num": 395, "name": "Weight Management Centres", "label": "#395 Weight Management Centres"}, {"num": 396, "name": "Sports Rehabilitation Clinics", "label": "#396 Sports Rehabilitation Clinics"}, {"num": 397, "name": "Physiotherapy Studios", "label": "#397 Physiotherapy Studios"}]}, {"sectorId": 13, "sectorName": "13. Travel, Tourism & Transportation", "defaultEntity": "service", "categories": [{"num": 398, "name": "Travel Agencies", "label": "#398 Travel Agencies"}, {"num": 399, "name": "Tour Operators", "label": "#399 Tour Operators"}, {"num": 400, "name": "Holiday Package Providers", "label": "#400 Holiday Package Providers"}, {"num": 401, "name": "International Tour Operators", "label": "#401 International Tour Operators"}, {"num": 402, "name": "Domestic Tour Operators", "label": "#402 Domestic Tour Operators"}, {"num": 403, "name": "Visa Consultancy Firms", "label": "#403 Visa Consultancy Firms"}, {"num": 404, "name": "Passport Assistance Centres", "label": "#404 Passport Assistance Centres"}, {"num": 405, "name": "Ticket Booking Agencies", "label": "#405 Ticket Booking Agencies"}, {"num": 406, "name": "Corporate Travel Management Companies", "label": "#406 Corporate Travel Management Companies"}, {"num": 407, "name": "Cruise Holiday Agencies", "label": "#407 Cruise Holiday Agencies"}, {"num": 408, "name": "Adventure Travel Companies", "label": "#408 Adventure Travel Companies"}, {"num": 409, "name": "Trekking Companies", "label": "#409 Trekking Companies"}, {"num": 410, "name": "Local Sightseeing Operators", "label": "#410 Local Sightseeing Operators"}, {"num": 411, "name": "Tourist Guides", "label": "#411 Tourist Guides"}, {"num": 412, "name": "Taxi Operators", "label": "#412 Taxi Operators"}, {"num": 413, "name": "Airport Transfer Services", "label": "#413 Airport Transfer Services"}, {"num": 414, "name": "Bus Ticket Agencies", "label": "#414 Bus Ticket Agencies"}, {"num": 415, "name": "Transport Companies", "label": "#415 Transport Companies"}, {"num": 416, "name": "Logistics Companies", "label": "#416 Logistics Companies"}, {"num": 417, "name": "Courier Services", "label": "#417 Courier Services"}, {"num": 418, "name": "Freight Forwarding Agencies", "label": "#418 Freight Forwarding Agencies"}, {"num": 419, "name": "Warehousing Providers", "label": "#419 Warehousing Providers"}, {"num": 420, "name": "Last-Mile Delivery Services", "label": "#420 Last-Mile Delivery Services"}, {"num": 421, "name": "Moving and Relocation Companies", "label": "#421 Moving and Relocation Companies"}, {"num": 422, "name": "Car Rental Services", "label": "#422 Car Rental Services"}, {"num": 423, "name": "Bike Rental Services", "label": "#423 Bike Rental Services"}, {"num": 424, "name": "Bicycle Rental Services", "label": "#424 Bicycle Rental Services"}]}, {"sectorId": 14, "sectorName": "14. Wedding, Events & Photography", "defaultEntity": "service", "categories": [{"num": 425, "name": "Wedding Planners", "label": "#425 Wedding Planners"}, {"num": 426, "name": "Wedding Decorators", "label": "#426 Wedding Decorators"}, {"num": 427, "name": "Wedding Photographers", "label": "#427 Wedding Photographers"}, {"num": 428, "name": "Wedding Cinematographers", "label": "#428 Wedding Cinematographers"}, {"num": 429, "name": "Pre-Wedding Photography Studios", "label": "#429 Pre-Wedding Photography Studios"}, {"num": 430, "name": "Portrait Photography Studios", "label": "#430 Portrait Photography Studios"}, {"num": 431, "name": "Commercial Photography Studios", "label": "#431 Commercial Photography Studios"}, {"num": 432, "name": "Product Photography Studios", "label": "#432 Product Photography Studios"}, {"num": 433, "name": "Videography Services", "label": "#433 Videography Services"}, {"num": 434, "name": "Photo Printing Studios", "label": "#434 Photo Printing Studios"}, {"num": 435, "name": "Photo Framing Shops", "label": "#435 Photo Framing Shops"}, {"num": 436, "name": "Bridal Boutiques", "label": "#436 Bridal Boutiques"}, {"num": 437, "name": "Bridal Makeup Artists", "label": "#437 Bridal Makeup Artists"}, {"num": 438, "name": "Wedding Invitation Designers", "label": "#438 Wedding Invitation Designers"}, {"num": 439, "name": "Birthday Party Planners", "label": "#439 Birthday Party Planners"}, {"num": 440, "name": "Corporate Event Planners", "label": "#440 Corporate Event Planners"}, {"num": 441, "name": "Event Venues", "label": "#441 Event Venues"}, {"num": 442, "name": "Florists", "label": "#442 Florists"}, {"num": 443, "name": "Wedding Jewellery Stores", "label": "#443 Wedding Jewellery Stores"}, {"num": 444, "name": "DJ Services", "label": "#444 DJ Services"}, {"num": 445, "name": "Sound and Lighting Rental Companies", "label": "#445 Sound and Lighting Rental Companies"}, {"num": 446, "name": "Stage Decoration Businesses", "label": "#446 Stage Decoration Businesses"}, {"num": 447, "name": "Balloon Decoration Services", "label": "#447 Balloon Decoration Services"}, {"num": 448, "name": "Party Supply Stores", "label": "#448 Party Supply Stores"}, {"num": 449, "name": "Costume Rental Shops", "label": "#449 Costume Rental Shops"}, {"num": 450, "name": "Luxury Wedding Car Rental Services", "label": "#450 Luxury Wedding Car Rental Services"}]}, {"sectorId": 15, "sectorName": "15. Home Repair & Maintenance Services", "defaultEntity": "service", "categories": [{"num": 451, "name": "Plumbers", "label": "#451 Plumbers"}, {"num": 452, "name": "Electricians", "label": "#452 Electricians"}, {"num": 453, "name": "AC Installation Services", "label": "#453 AC Installation Services"}, {"num": 454, "name": "AC Repair Services", "label": "#454 AC Repair Services"}, {"num": 455, "name": "Refrigerator Repair Services", "label": "#455 Refrigerator Repair Services"}, {"num": 456, "name": "Washing Machine Repair Services", "label": "#456 Washing Machine Repair Services"}, {"num": 457, "name": "Microwave Repair Services", "label": "#457 Microwave Repair Services"}, {"num": 458, "name": "Water Purifier Repair Services", "label": "#458 Water Purifier Repair Services"}, {"num": 459, "name": "RO Service Providers", "label": "#459 RO Service Providers"}, {"num": 460, "name": "Television Repair Services", "label": "#460 Television Repair Services"}, {"num": 461, "name": "Appliance Repair Technicians", "label": "#461 Appliance Repair Technicians"}, {"num": 462, "name": "Carpenter Services", "label": "#462 Carpenter Services"}, {"num": 463, "name": "Furniture Repair Services", "label": "#463 Furniture Repair Services"}, {"num": 464, "name": "Locksmiths", "label": "#464 Locksmiths"}, {"num": 465, "name": "CCTV Installation Services", "label": "#465 CCTV Installation Services"}, {"num": 466, "name": "Home Security Installers", "label": "#466 Home Security Installers"}, {"num": 467, "name": "Inverter Repair Services", "label": "#467 Inverter Repair Services"}, {"num": 468, "name": "Solar Panel Installation Companies", "label": "#468 Solar Panel Installation Companies"}, {"num": 469, "name": "Solar Water Heater Installers", "label": "#469 Solar Water Heater Installers"}, {"num": 470, "name": "Generator Repair Services", "label": "#470 Generator Repair Services"}, {"num": 471, "name": "Lift Maintenance Companies", "label": "#471 Lift Maintenance Companies"}, {"num": 472, "name": "Termite Treatment Companies", "label": "#472 Termite Treatment Companies"}, {"num": 473, "name": "Home Cleaning Companies", "label": "#473 Home Cleaning Companies"}, {"num": 474, "name": "Sofa Cleaning Services", "label": "#474 Sofa Cleaning Services"}, {"num": 475, "name": "Carpet Cleaning Services", "label": "#475 Carpet Cleaning Services"}, {"num": 476, "name": "Water Tank Cleaning Services", "label": "#476 Water Tank Cleaning Services"}, {"num": 477, "name": "Bathroom Cleaning Services", "label": "#477 Bathroom Cleaning Services"}, {"num": 478, "name": "Chimney Cleaning Services", "label": "#478 Chimney Cleaning Services"}, {"num": 479, "name": "Kitchen Deep Cleaning Services", "label": "#479 Kitchen Deep Cleaning Services"}, {"num": 480, "name": "Home Painting Services", "label": "#480 Home Painting Services"}, {"num": 481, "name": "Glass Repair Services", "label": "#481 Glass Repair Services"}, {"num": 482, "name": "Metal Fabrication Workshops", "label": "#482 Metal Fabrication Workshops"}, {"num": 483, "name": "Welding Shops", "label": "#483 Welding Shops"}, {"num": 484, "name": "RO Water Suppliers", "label": "#484 RO Water Suppliers"}, {"num": 485, "name": "Water Tanker Services", "label": "#485 Water Tanker Services"}, {"num": 486, "name": "Laundry Services", "label": "#486 Laundry Services"}, {"num": 487, "name": "Dry Cleaners", "label": "#487 Dry Cleaners"}, {"num": 488, "name": "Ironing Services", "label": "#488 Ironing Services"}, {"num": 489, "name": "Shoe Repair Shops", "label": "#489 Shoe Repair Shops"}, {"num": 490, "name": "Key Duplication Shops", "label": "#490 Key Duplication Shops"}, {"num": 491, "name": "Tailoring and Alteration Services", "label": "#491 Tailoring and Alteration Services"}]}, {"sectorId": 16, "sectorName": "16. Pet Care & Animal Services", "defaultEntity": "service", "categories": [{"num": 492, "name": "Pet Shops", "label": "#492 Pet Shops"}, {"num": 493, "name": "Veterinary Clinics", "label": "#493 Veterinary Clinics"}, {"num": 494, "name": "Veterinary Hospitals", "label": "#494 Veterinary Hospitals"}, {"num": 495, "name": "Pet Grooming Salons", "label": "#495 Pet Grooming Salons"}, {"num": 496, "name": "Pet Boarding Facilities", "label": "#496 Pet Boarding Facilities"}, {"num": 497, "name": "Pet Hotels", "label": "#497 Pet Hotels"}, {"num": 498, "name": "Pet Daycare Centres", "label": "#498 Pet Daycare Centres"}, {"num": 499, "name": "Dog Training Centres", "label": "#499 Dog Training Centres"}, {"num": 500, "name": "Pet Behaviour Consultants", "label": "#500 Pet Behaviour Consultants"}, {"num": 501, "name": "Pet Walking Services", "label": "#501 Pet Walking Services"}, {"num": 502, "name": "Pet Sitting Services", "label": "#502 Pet Sitting Services"}, {"num": 503, "name": "Pet Relocation Services", "label": "#503 Pet Relocation Services"}, {"num": 504, "name": "Pet Adoption Centres", "label": "#504 Pet Adoption Centres"}, {"num": 505, "name": "Aquarium Shops", "label": "#505 Aquarium Shops"}, {"num": 506, "name": "Aquarium Maintenance Services", "label": "#506 Aquarium Maintenance Services"}, {"num": 507, "name": "Fish Stores", "label": "#507 Fish Stores"}, {"num": 508, "name": "Pet Food Stores", "label": "#508 Pet Food Stores"}, {"num": 509, "name": "Pet Accessory Shops", "label": "#509 Pet Accessory Shops"}, {"num": 510, "name": "Pet Photography Studios", "label": "#510 Pet Photography Studios"}, {"num": 511, "name": "Pet Cremation Services", "label": "#511 Pet Cremation Services"}]}, {"sectorId": 17, "sectorName": "17. Entertainment, Recreation & Leisure", "defaultEntity": "business", "categories": [{"num": 512, "name": "Multiplexes", "label": "#512 Multiplexes"}, {"num": 513, "name": "Independent Cinemas", "label": "#513 Independent Cinemas"}, {"num": 514, "name": "Gaming Zones", "label": "#514 Gaming Zones"}, {"num": 515, "name": "Bowling Alleys", "label": "#515 Bowling Alleys"}, {"num": 516, "name": "Amusement Centres", "label": "#516 Amusement Centres"}, {"num": 517, "name": "Trampoline Parks", "label": "#517 Trampoline Parks"}, {"num": 518, "name": "Children’s Play Zones", "label": "#518 Children’s Play Zones"}, {"num": 519, "name": "Indoor Playgrounds", "label": "#519 Indoor Playgrounds"}, {"num": 520, "name": "Escape Rooms", "label": "#520 Escape Rooms"}, {"num": 521, "name": "Pool and Billiards Clubs", "label": "#521 Pool and Billiards Clubs"}, {"num": 522, "name": "Karaoke Lounges", "label": "#522 Karaoke Lounges"}, {"num": 523, "name": "Board Game Cafes", "label": "#523 Board Game Cafes"}, {"num": 524, "name": "Art Galleries", "label": "#524 Art Galleries"}, {"num": 525, "name": "Museums", "label": "#525 Museums"}, {"num": 526, "name": "Cultural Centres", "label": "#526 Cultural Centres"}, {"num": 527, "name": "Theatre Companies", "label": "#527 Theatre Companies"}, {"num": 528, "name": "Live Music Venues", "label": "#528 Live Music Venues"}, {"num": 529, "name": "Music Studios", "label": "#529 Music Studios"}, {"num": 530, "name": "Recording Studios", "label": "#530 Recording Studios"}, {"num": 531, "name": "Rehearsal Studios", "label": "#531 Rehearsal Studios"}, {"num": 532, "name": "Dance Clubs", "label": "#532 Dance Clubs"}, {"num": 533, "name": "Banquet and Party Venues", "label": "#533 Banquet and Party Venues"}, {"num": 534, "name": "Hobby Clubs", "label": "#534 Hobby Clubs"}, {"num": 535, "name": "Pottery Studios", "label": "#535 Pottery Studios"}, {"num": 536, "name": "Craft Workshops", "label": "#536 Craft Workshops"}, {"num": 537, "name": "Recreational Activity Centres", "label": "#537 Recreational Activity Centres"}]}, {"sectorId": 18, "sectorName": "18. Industrial, Manufacturing & B2B Businesses", "defaultEntity": "business", "categories": [{"num": 538, "name": "Manufacturing Companies", "label": "#538 Manufacturing Companies"}, {"num": 539, "name": "Packaging Manufacturers", "label": "#539 Packaging Manufacturers"}, {"num": 540, "name": "Printing Presses", "label": "#540 Printing Presses"}, {"num": 541, "name": "Industrial Equipment Suppliers", "label": "#541 Industrial Equipment Suppliers"}, {"num": 542, "name": "Electrical Equipment Dealers", "label": "#542 Electrical Equipment Dealers"}, {"num": 543, "name": "Industrial Automation Companies", "label": "#543 Industrial Automation Companies"}, {"num": 544, "name": "Machine Tool Suppliers", "label": "#544 Machine Tool Suppliers"}, {"num": 545, "name": "Wholesale Distributors", "label": "#545 Wholesale Distributors"}, {"num": 546, "name": "Building Material Suppliers", "label": "#546 Building Material Suppliers"}, {"num": 547, "name": "Chemical Distributors", "label": "#547 Chemical Distributors"}, {"num": 548, "name": "Laboratory Equipment Suppliers", "label": "#548 Laboratory Equipment Suppliers"}, {"num": 549, "name": "Furniture Manufacturers", "label": "#549 Furniture Manufacturers"}, {"num": 550, "name": "Modular Furniture Manufacturers", "label": "#550 Modular Furniture Manufacturers"}, {"num": 551, "name": "Garment Manufacturers", "label": "#551 Garment Manufacturers"}, {"num": 552, "name": "Textile Businesses", "label": "#552 Textile Businesses"}, {"num": 553, "name": "Food Processing Companies", "label": "#553 Food Processing Companies"}, {"num": 554, "name": "Commercial Kitchen Equipment Suppliers", "label": "#554 Commercial Kitchen Equipment Suppliers"}, {"num": 555, "name": "Industrial Safety Equipment Suppliers", "label": "#555 Industrial Safety Equipment Suppliers"}, {"num": 556, "name": "HVAC Contractors", "label": "#556 HVAC Contractors"}, {"num": 557, "name": "Commercial Refrigeration Companies", "label": "#557 Commercial Refrigeration Companies"}, {"num": 558, "name": "Commercial Cleaning Suppliers", "label": "#558 Commercial Cleaning Suppliers"}, {"num": 559, "name": "Office Furniture Suppliers", "label": "#559 Office Furniture Suppliers"}, {"num": 560, "name": "Office Stationery Wholesalers", "label": "#560 Office Stationery Wholesalers"}, {"num": 561, "name": "Import-Export Companies", "label": "#561 Import-Export Companies"}, {"num": 562, "name": "Industrial Repair Workshops", "label": "#562 Industrial Repair Workshops"}, {"num": 563, "name": "Equipment Rental Companies", "label": "#563 Equipment Rental Companies"}, {"num": 564, "name": "Commercial Vehicle Dealers", "label": "#564 Commercial Vehicle Dealers"}, {"num": 565, "name": "Solar Equipment Distributors", "label": "#565 Solar Equipment Distributors"}]}, {"sectorId": 19, "sectorName": "19. Agriculture, Plants & Gardening", "defaultEntity": "business", "categories": [{"num": 566, "name": "Plant Nurseries", "label": "#566 Plant Nurseries"}, {"num": 567, "name": "Garden Centres", "label": "#567 Garden Centres"}, {"num": 568, "name": "Landscaping Companies", "label": "#568 Landscaping Companies"}, {"num": 569, "name": "Gardening Services", "label": "#569 Gardening Services"}, {"num": 570, "name": "Garden Maintenance Services", "label": "#570 Garden Maintenance Services"}, {"num": 571, "name": "Hydroponic Farming Suppliers", "label": "#571 Hydroponic Farming Suppliers"}, {"num": 572, "name": "Organic Farming Suppliers", "label": "#572 Organic Farming Suppliers"}, {"num": 573, "name": "Agricultural Equipment Dealers", "label": "#573 Agricultural Equipment Dealers"}, {"num": 574, "name": "Irrigation Equipment Suppliers", "label": "#574 Irrigation Equipment Suppliers"}, {"num": 575, "name": "Seeds and Fertiliser Shops", "label": "#575 Seeds and Fertiliser Shops"}, {"num": 576, "name": "Indoor Plant Shops", "label": "#576 Indoor Plant Shops"}, {"num": 577, "name": "Flower Wholesalers", "label": "#577 Flower Wholesalers"}, {"num": 578, "name": "Floriculture Businesses", "label": "#578 Floriculture Businesses"}, {"num": 579, "name": "Gardening Equipment Stores", "label": "#579 Gardening Equipment Stores"}, {"num": 580, "name": "Aquarium Plant Shops", "label": "#580 Aquarium Plant Shops"}]}, {"sectorId": 20, "sectorName": "20. Other Local Consumer Services", "defaultEntity": "service", "categories": [{"num": 581, "name": "Internet Service Providers", "label": "#581 Internet Service Providers"}, {"num": 582, "name": "Cable TV Operators", "label": "#582 Cable TV Operators"}, {"num": 583, "name": "Broadband Service Centres", "label": "#583 Broadband Service Centres"}, {"num": 584, "name": "Courier Franchise Outlets", "label": "#584 Courier Franchise Outlets"}, {"num": 585, "name": "Photocopy Shops", "label": "#585 Photocopy Shops"}, {"num": 586, "name": "Internet Cafes", "label": "#586 Internet Cafes"}, {"num": 587, "name": "Cyber Cafes", "label": "#587 Cyber Cafes"}, {"num": 588, "name": "Common Service Centres", "label": "#588 Common Service Centres"}, {"num": 589, "name": "Online Form Filling Centres", "label": "#589 Online Form Filling Centres"}, {"num": 590, "name": "Passport Photo Studios", "label": "#590 Passport Photo Studios"}, {"num": 591, "name": "Typing Centres", "label": "#591 Typing Centres"}, {"num": 592, "name": "Resume Writing Services", "label": "#592 Resume Writing Services"}, {"num": 593, "name": "Translation and Transcription Services", "label": "#593 Translation and Transcription Services"}, {"num": 594, "name": "Document Scanning Centres", "label": "#594 Document Scanning Centres"}, {"num": 595, "name": "Lamination Shops", "label": "#595 Lamination Shops"}, {"num": 596, "name": "Rubber Stamp Manufacturers", "label": "#596 Rubber Stamp Manufacturers"}, {"num": 597, "name": "Courier and Parcel Shops", "label": "#597 Courier and Parcel Shops"}, {"num": 598, "name": "Packaging and Shipping Shops", "label": "#598 Packaging and Shipping Shops"}, {"num": 599, "name": "Self-Storage Facilities", "label": "#599 Self-Storage Facilities"}, {"num": 600, "name": "Public Relations Consultants", "label": "#600 Public Relations Consultants"}, {"num": 601, "name": "Private Investigation Agencies", "label": "#601 Private Investigation Agencies"}, {"num": 602, "name": "Security Guard Agencies", "label": "#602 Security Guard Agencies"}, {"num": 603, "name": "Facility Management Companies", "label": "#603 Facility Management Companies"}, {"num": 604, "name": "Manpower Supply Agencies", "label": "#604 Manpower Supply Agencies"}, {"num": 605, "name": "Domestic Help Agencies", "label": "#605 Domestic Help Agencies"}, {"num": 606, "name": "Maid Services", "label": "#606 Maid Services"}, {"num": 607, "name": "Cook Services", "label": "#607 Cook Services"}, {"num": 608, "name": "Babysitting Services", "label": "#608 Babysitting Services"}, {"num": 609, "name": "Elderly Care Services", "label": "#609 Elderly Care Services"}, {"num": 610, "name": "Personal Concierge Services", "label": "#610 Personal Concierge Services"}]}, {"sectorId": 21, "sectorName": "21. Religious, Cultural & Community Services", "defaultEntity": "service", "categories": [{"num": 611, "name": "Event and Religious Ceremony Organisers", "label": "#611 Event and Religious Ceremony Organisers"}, {"num": 612, "name": "Marriage Bureaus", "label": "#612 Marriage Bureaus"}, {"num": 613, "name": "Matrimonial Agencies", "label": "#613 Matrimonial Agencies"}, {"num": 614, "name": "Community Halls", "label": "#614 Community Halls"}, {"num": 615, "name": "Cultural Associations", "label": "#615 Cultural Associations"}, {"num": 616, "name": "Meditation and Spiritual Centres", "label": "#616 Meditation and Spiritual Centres"}, {"num": 617, "name": "Religious Goods Shops", "label": "#617 Religious Goods Shops"}, {"num": 618, "name": "Pooja Item Stores", "label": "#618 Pooja Item Stores"}, {"num": 619, "name": "Flower and Garland Shops", "label": "#619 Flower and Garland Shops"}, {"num": 620, "name": "Religious Bookstores", "label": "#620 Religious Bookstores"}, {"num": 621, "name": "Astrology Consultation Centres", "label": "#621 Astrology Consultation Centres"}, {"num": 622, "name": "Vastu Consultants", "label": "#622 Vastu Consultants"}, {"num": 623, "name": "Spiritual Counselling Services", "label": "#623 Spiritual Counselling Services"}]}, {"sectorId": 22, "sectorName": "22. Commercial, Corporate & Specialised Services", "defaultEntity": "service", "categories": [{"num": 624, "name": "Coworking Spaces", "label": "#624 Coworking Spaces"}, {"num": 625, "name": "Business Centres", "label": "#625 Business Centres"}, {"num": 626, "name": "Conference Centres", "label": "#626 Conference Centres"}, {"num": 627, "name": "Corporate Training Providers", "label": "#627 Corporate Training Providers"}, {"num": 628, "name": "Executive Coaching Services", "label": "#628 Executive Coaching Services"}, {"num": 629, "name": "Leadership Development Consultants", "label": "#629 Leadership Development Consultants"}, {"num": 630, "name": "Corporate Wellness Providers", "label": "#630 Corporate Wellness Providers"}, {"num": 631, "name": "Industrial Cleaning Companies", "label": "#631 Industrial Cleaning Companies"}, {"num": 632, "name": "Commercial Pest Control Services", "label": "#632 Commercial Pest Control Services"}, {"num": 633, "name": "Commercial Laundry Services", "label": "#633 Commercial Laundry Services"}, {"num": 634, "name": "Commercial Kitchen Maintenance Services", "label": "#634 Commercial Kitchen Maintenance Services"}, {"num": 635, "name": "Office Equipment Suppliers", "label": "#635 Office Equipment Suppliers"}, {"num": 636, "name": "Office Automation Providers", "label": "#636 Office Automation Providers"}, {"num": 637, "name": "Document Management Services", "label": "#637 Document Management Services"}, {"num": 638, "name": "Records Storage Companies", "label": "#638 Records Storage Companies"}, {"num": 639, "name": "Commercial Security Services", "label": "#639 Commercial Security Services"}, {"num": 640, "name": "Fire Safety Equipment Suppliers", "label": "#640 Fire Safety Equipment Suppliers"}, {"num": 641, "name": "Fire Protection System Installers", "label": "#641 Fire Protection System Installers"}, {"num": 642, "name": "Elevator and Escalator Service Providers", "label": "#642 Elevator and Escalator Service Providers"}, {"num": 643, "name": "Commercial Waste Management Companies", "label": "#643 Commercial Waste Management Companies"}, {"num": 644, "name": "Recycling Companies", "label": "#644 Recycling Companies"}, {"num": 645, "name": "Environmental Consulting Firms", "label": "#645 Environmental Consulting Firms"}, {"num": 646, "name": "Water Treatment Companies", "label": "#646 Water Treatment Companies"}, {"num": 647, "name": "Water Testing Laboratories", "label": "#647 Water Testing Laboratories"}, {"num": 648, "name": "Energy Audit Consultants", "label": "#648 Energy Audit Consultants"}, {"num": 649, "name": "Solar Energy Companies", "label": "#649 Solar Energy Companies"}, {"num": 650, "name": "EV Charging Station Operators", "label": "#650 EV Charging Station Operators"}]}, {"sectorId": 23, "sectorName": "23. Government & Public Services", "defaultEntity": "service", "categories": [{"num": 651, "name": "Government Offices", "label": "#651 Government Offices"}, {"num": 652, "name": "Municipal Service Centres", "label": "#652 Municipal Service Centres"}, {"num": 653, "name": "Post Offices", "label": "#653 Post Offices"}, {"num": 654, "name": "Public Hospitals", "label": "#654 Public Hospitals"}, {"num": 655, "name": "Government Educational Institutions", "label": "#655 Government Educational Institutions"}, {"num": 656, "name": "Public Transport Offices", "label": "#656 Public Transport Offices"}, {"num": 657, "name": "Utility Service Centres", "label": "#657 Utility Service Centres"}, {"num": 658, "name": "Public Libraries", "label": "#658 Public Libraries"}, {"num": 659, "name": "Public Sector Banks", "label": "#659 Public Sector Banks"}, {"num": 660, "name": "Government Tourism Offices", "label": "#660 Government Tourism Offices"}, {"num": 661, "name": "Government-Approved Service Centres", "label": "#661 Government-Approved Service Centres"}, {"num": 662, "name": "Public Sector Insurance Offices", "label": "#662 Public Sector Insurance Offices"}]}];
+
+    // Flatten lookup map by category name
+    const CATEGORY_MAP = {};
+    SECTORS_DATA.forEach(sec => {
+      sec.categories.forEach(cat => {
+        CATEGORY_MAP[cat.name] = {
+          num: cat.num,
+          name: cat.name,
+          label: cat.label,
+          sectorId: sec.sectorId,
+          sectorName: sec.sectorName,
+          defaultEntity: sec.defaultEntity
+        };
+      });
+    });
+
+    // Smart Category-Aware Offerings & Vibes Generator for all 662 categories
+    const SPECIFIC_CATEGORY_OFFERINGS = {
+      'Bengali Restaurants': {
+        items: ['Kosha Mangsho', 'Bhapa Ilish', 'Chingri Malai Curry', 'Basanti Pulao', 'Luchi & Cholar Dal', 'Baked Mishti Doi'],
+        vibes: ['Authentic Bengali Flavors', 'Homestyle Cooking', 'Generous Portions', 'Warm Hospitality', 'Hygienic Dining']
+      },
+      'North Indian Restaurants': {
+        items: ['Butter Chicken', 'Dal Makhani', 'Garlic Butter Naan', 'Paneer Tikka Masala', 'Tandoori Platter', 'Amritsari Kulcha'],
+        vibes: ['Rich Smoky Flavors', 'Freshly Baked Tandoor', 'Quick Service', 'Great Family Ambience', 'Value for Money']
+      },
+      'South Indian Restaurants': {
+        items: ['Mysore Masala Dosa', 'Ghee Roast Idli & Vada', 'Filter Coffee', 'Rava Onion Uttapam', 'Mini Tiffin Thali'],
+        vibes: ['Crispy & Fresh', 'Authentic Sambar & Chutney', 'Super Fast Service', 'Spotless Hygiene', 'Pocket-Friendly']
+      },
+      'Biryani Outlets': {
+        items: ['Kolkata Special Mutton Biryani', 'Chicken Dum Biryani', 'Royal Chicken Chaap', 'Mutton Rezala', 'Kesari Firni'],
+        vibes: ['Aromatic Long-Grain Rice', 'Tender Meat Pieces', 'Perfect Spice Balance', 'Generous Quantity', 'Fast Packaging']
+      },
+      'Sweet Shops': {
+        items: ['Baked Rosogolla', 'Nolen Gurer Sandesh', 'Kaju Katli', 'Mishti Doi', 'Kheer Kadam', 'Hot Singara & Jalebi'],
+        vibes: ['Freshly Prepared Daily', 'Pure Chhena & Ghee', 'Authentic Taste', 'Hygienic Display', 'Festive Gift Boxes']
+      },
+      'Cafes': {
+        items: ['Artisan Cold Brew', 'Hazelnut Cappuccino', 'Almond Croissant', 'Grilled Pesto Sandwich', 'Belgian Chocolate Waffle'],
+        vibes: ['Cozy Ambience', 'Freshly Brewed Coffee', 'Friendly Baristas', 'Great Hangout Spot', 'Fast Wi-Fi & Seating']
+      },
+      'Coffee Shops': {
+        items: ['Single-Origin Espresso', 'Iced Caramel Macchiato', 'Cappuccino', 'Blueberry Cheesecake', 'Garlic Cheese Toast'],
+        vibes: ['Rich Coffee Aroma', 'Warm Lighting', 'Polite Staff', 'Quick Counter Service', 'Consistent Taste']
+      },
+      'Tea Cafes': {
+        items: ['Kulhad Masala Chai', 'Darjeeling First Flush Tea', 'Zafrani Cutting Chai', 'Bun Maska', 'Peri-Peri Fries'],
+        vibes: ['Refreshing Adda Vibe', 'Authentic Chai Blend', 'Pocket-Friendly Menu', 'Quick Service', 'Clean Seating']
+      },
+      'Bakeries': {
+        items: ['Fresh Cream Truffle Cake', 'Butter Croissant', 'Chicken Patties', 'Multigrain Sourdough Loaf', 'Fudgy Brownie'],
+        vibes: ['Baked Fresh Every Morning', 'Soft & Delicious', 'Custom Cake Designs', 'Fair Prices', 'Neat Packaging']
+      },
+      'Unisex Salons': {
+        items: ['Layered Haircut & Styling', 'Keratin Hair Spa', 'HydraFacial Glow Treatment', 'Beard Grooming & Detan', 'Global Hair Colour'],
+        vibes: ['Skilled Stylists', 'Sanitized Tools', 'Relaxing Ambience', 'Zero Wait Time', 'Genuine Products Used']
+      },
+      'Bridal Makeup Studios': {
+        items: ['HD Bridal Makeup Package', 'Airbrush Reception Look', 'Pre-Bridal Skin Glow Care', 'Saree Draping & Hairstyling', 'Engagement Party Look'],
+        vibes: ['Flawless Natural Finish', 'Long-Lasting Products', 'Calm & Patient Artist', 'On-Time Readiness', 'Stunning Photos']
+      },
+      'Dental Clinics': {
+        items: ['Painless Root Canal (RCT)', 'Ultrasonic Scaling & Polishing', 'Laser Teeth Whitening', 'Dental Implants', 'Clear Aligners Consult'],
+        vibes: ['Painless Treatment', 'Gentle & Caring Doctor', 'Sterilized Equipment', 'Clear Explanation', 'On-Time Appointment']
+      },
+      'Pathology Laboratories': {
+        items: ['Full Body Health Checkup', 'Thyroid & Lipid Profile', 'HbA1c & Blood Sugar Test', 'Home Blood Sample Collection', 'Vitamin D & B12 Panel'],
+        vibes: ['Painless Sample Collection', 'Same-Day Digital Reports', 'Hygienic Lab', 'Punctual Phlebotomist', 'Accurate Diagnostics']
+      },
+      'Saree Shops': {
+        items: ['Pure Kanjivaram Silk Saree', 'Handloom Tant & Jamdani', 'Banarasi Brocade Saree', 'Designer Partywear Saree', 'Linen & Tussar Silk'],
+        vibes: ['Authentic Handloom Weaves', 'Huge Festive Collection', 'Patient Staff Showing Drapes', 'Fair Fixed Pricing', 'Rich Colors']
+      },
+      'Gold Jewellery Stores': {
+        items: ['BIS Hallmarked 22K Necklace', 'Bridal Gold Bangles', 'Lightweight Dailywear Earrings', 'Custom Wedding Ring', 'Gold Coin & Chain'],
+        vibes: ['100% BIS Hallmark Purity', 'Transparent Making Charges', 'Exquisite Craftsmanship', 'Courteous Showroom Staff', 'Trusted Legacy']
+      },
+      'Mobile Phone Stores': {
+        items: ['5G Flagship Smartphone', 'Exchange Upgrade Offer', 'TWS Noise-Cancelling Earbuds', 'Tempered Glass & Armor Case', 'Fast Adapter & Cable'],
+        vibes: ['Sealed Genuine Stock', 'Best Exchange Valuation', 'Easy EMI Assistance', 'Helpful Data Transfer', 'Honest Guidance']
+      },
+      'Car Service Centres': {
+        items: ['Periodic Engine Oil Service', 'Computerized Wheel Alignment', 'AC Gas & Cooling Coil Service', 'Brake Pad Replacement', 'Full Interior & Exterior Wash'],
+        vibes: ['Genuine Spare Parts', 'Transparent Estimate', 'Same-Day Delivery', 'Skilled Mechanics', 'Smooth Test Drive']
+      },
+      'Car Detailing Studios': {
+        items: ['9H Ceramic Coating', 'Paint Protection Film (PPF)', 'Deep Interior Steam Detailing', 'Headlight Restoration', 'Alloy & Underbody Coating'],
+        vibes: ['Mirror-Like Showroom Gloss', 'Meticulous Attention to Detail', 'Premium Imported Products', 'On-Time Handover', 'Dust-Free Studio']
+      },
+      'Interior Design Studios': {
+        items: ['Full 3BHK Turnkey Interior', 'Modular Kitchen & Wardrobe', 'False Ceiling & Cove Lighting', '3D Interior Visualization', 'Living Room TV Unit'],
+        vibes: ['Creative Space Planning', 'On-Schedule Handover', 'Premium Marine Plywood', 'Transparent BOQ Pricing', 'Dedicated Site Supervisor']
+      },
+      'Coaching Centres': {
+        items: ['Foundation Batch Classes', 'Weekly Mock Test Series', '1-on-1 Doubt Clearing Sessions', 'Printed Study Modules', 'Crash Course Revision'],
+        vibes: ['Experienced Faculty', 'Concept-First Teaching', 'Personal Mentorship', 'Regular Parent Updates', 'Proven Exam Results']
+      },
+      'Chartered Accountant Firms': {
+        items: ['Income Tax Return (ITR) Filing', 'GST Registration & Monthly Filing', 'Company Incorporation & ROC', 'Tax Audit & Balance Sheet', 'Financial Advisory'],
+        vibes: ['Proactive Tax Saving Advice', 'Timely Compliance', 'Clear Financial Guidance', 'Confidential & Reliable', 'Prompt Support']
+      },
+      'Gyms': {
+        items: ['Strength & Cardio Membership', '1-on-1 Personal Training', 'Weight Loss Transformation Plan', 'CrossFit & Functional Zone', 'Diet & Macro Consultation'],
+        vibes: ['Well-Maintained Imported Gear', 'Certified Supportive Trainers', 'Hygienic Locker Rooms', 'Motivating Vibe', 'Never Overcrowded']
+      },
+      'Wedding Photographers': {
+        items: ['Candid Wedding Photography', 'Cinematic Wedding Teaser & Film', 'Pre-Wedding Outdoor Shoot', 'Drone Aerial Coverage', 'Luxury Handcrafted Photo Album'],
+        vibes: ['Captured Raw Emotions', 'Friendly Unobtrusive Crew', 'Cinematic Color Grading', 'Fast Album Delivery', 'Creative Posing Ideas']
+      },
+      'AC Repair Services': {
+        items: ['Split AC Jet Pump Deep Servicing', 'AC Gas Charging & Leak Fix', 'PCB Board Repair', 'New AC Installation & Uninstallation', 'Annual Maintenance (AMC)'],
+        vibes: ['Arrived Within 60 Minutes', 'Neat Mess-Free Work', 'Genuine Refrigerant Gas', 'Upfront Rate Card', 'Instant Cooling Restored']
+      }
+    };
+
+    const SECTOR_FALLBACK_OFFERINGS = {
+      1: {
+        items: ['Signature Chef Special', 'Family Combo Platter', 'Fresh Beverages & Desserts', 'Takeaway Parcel Order', 'Weekend Buffet Spread'],
+        vibes: ['Delicious Taste', 'Fresh Ingredients', 'Warm Courteous Staff', 'Clean & Hygienic', 'Great Value for Money']
+      },
+      2: {
+        items: ['Signature Grooming Session', 'Skin & Hair Rejuvenation', 'Express Makeover Package', 'Relaxing Spa Therapy', 'Bridal & Festive Styling'],
+        vibes: ['Skilled Professionals', 'Hygienic & Sanitized', 'Soothing Ambience', 'Genuine Products', 'Personal Attention']
+      },
+      3: {
+        items: ['Specialist Consultation', 'Diagnostic & Health Screening', 'Painless Procedure & Care', 'Pharmacy & Medicine Support', 'Follow-Up Recovery Plan'],
+        vibes: ['Caring & Patient Staff', 'Spotless Hygiene', 'Accurate Diagnosis', 'Minimal Wait Time', 'Clear Guidance']
+      },
+      4: {
+        items: ['Festive & Wedding Collection', 'Everyday Casual Wear', 'Custom Fit & Alteration', 'Signature Accessories', 'Gift Packaging'],
+        vibes: ['Trendy Designs', 'Premium Quality Material', 'Helpful Showroom Staff', 'Fair Pricing', 'Great Fitting']
+      },
+      5: {
+        items: ['Latest Model Purchase', 'Genuine Accessories Bundle', 'Device Setup & Data Transfer', 'Repair & Upgrade Service', 'Warranty Support'],
+        vibes: ['100% Genuine Products', 'Honest Technical Advice', 'Competitive Pricing', 'Quick Service', 'Reliable After-Sales']
+      },
+      6: {
+        items: ['Premium Home Essentials', 'Daily Grocery & Fresh Stock', 'Custom Size & Color Selection', 'Doorstep Delivery & Setup', 'Festive Gift Hamper'],
+        vibes: ['Wide Variety under One Roof', 'Top-Notch Quality', 'Well-Organized Store', 'Polite Billing Staff', 'Reasonable Rates']
+      },
+      7: {
+        items: ['Complete Vehicle Servicing', 'Diagnostic Check & Repair', 'Detailing & Wash Package', 'Genuine Spare Parts & Tyres', 'Quick Roadside Support'],
+        vibes: ['Expert Mechanics', 'Transparent Billing', 'On-Time Vehicle Delivery', 'Genuine Parts Used', 'Smooth Performance']
+      },
+      8: {
+        items: ['Site Consultation & Planning', 'Turnkey Execution & Design', 'Quality Material Supply', 'Renovation & Waterproofing', 'Timely Project Handover'],
+        vibes: ['Professional Workmanship', 'Transparent Costing', 'On-Time Completion', 'Durable Materials', 'Responsive Team']
+      },
+      9: {
+        items: ['Comprehensive Classroom Course', 'Doubt-Clearing & Mentorship', 'Practical Hands-On Training', 'Mock Tests & Study Material', 'Career & Admission Guidance'],
+        vibes: ['Supportive Faculty', 'Structured Curriculum', 'Individual Attention', 'Positive Learning Environment', 'Great Results']
+      },
+      10: {
+        items: ['Expert Advisory & Consultation', 'Documentation & Filing', 'Registration & Compliance', 'Financial & Tax Planning', 'End-to-End Case Handling'],
+        vibes: ['Thorough Domain Expertise', 'Hassle-Free Process', 'Transparent Fees', 'Timely Updates', 'Trustworthy Advice']
+      },
+      11: {
+        items: ['Custom Digital & IT Solution', 'Brand Strategy & Campaigns', 'Software & Web Deployment', 'Dedicated Account Support', 'Print & Signage Production'],
+        vibes: ['Creative & Strategic Team', 'On-Time Milestone Delivery', 'Responsive Communication', 'Measurable ROI', 'Seamless Execution']
+      },
+      12: {
+        items: ['Monthly Fitness Membership', '1-on-1 Coaching Session', 'Group Workout & Yoga Batch', 'Nutrition & Lifestyle Plan', 'Sports Skill Assessment'],
+        vibes: ['Motivating Coaches', 'Clean Well-Equipped Facility', 'Positive Energy', 'Safe Technique Focus', 'Visible Progress']
+      },
+      13: {
+        items: ['Customized Tour Package', 'Airport & Outstation Cab', 'Visa & Ticket Assistance', 'Express Parcel & Logistics', 'Safe Door-to-Door Relocation'],
+        vibes: ['Punctual & Reliable', 'Well-Planned Itinerary', 'Polite Drivers & Staff', 'Zero Hidden Costs', '24/7 Coordination']
+      },
+      14: {
+        items: ['Full Event Planning & Decor', 'Candid Photography & Film', 'Custom Floral & Stage Setup', 'Sound, DJ & Lighting', 'Custom Invitations & Albums'],
+        vibes: ['Magical Visual Aesthetic', 'Stress-Free Coordination', 'Punctual Crew', 'Creative Detailing', 'Unforgettable Memories']
+      },
+      15: {
+        items: ['Doorstep Inspection & Repair', 'Deep Cleaning & Sanitization', 'Genuine Part Replacement', 'Installation & Wiring', 'Express Same-Day Fix'],
+        vibes: ['Arrived Right on Time', 'Skilled & Polite Technician', 'Neat Workmanship', 'Fair Upfront Pricing', 'Problem Solved Quickly']
+      },
+      16: {
+        items: ['Gentle Pet Grooming & Bath', 'Vet Checkup & Vaccination', 'Nutritious Pet Food & Toys', 'Safe Pet Boarding & Daycare', 'Aquarium Setup & Care'],
+        vibes: ['Genuine Love for Animals', 'Clean & Stress-Free Space', 'Gentle Handling', 'Knowledgeable Staff', 'Happy & Healthy Pet']
+      },
+      17: {
+        items: ['Weekend Family Pass', 'Group Gaming & Activity Session', 'Live Show & Screening', 'Creative Workshop Experience', 'Private Party Booking'],
+        vibes: ['Vibrant Atmosphere', 'Well-Maintained Setup', 'Friendly Hosts', 'Safe & Clean Venue', 'Great Fun for Everyone']
+      },
+      18: {
+        items: ['Bulk Commercial Supply', 'Custom Manufacturing Order', 'Precision Equipment & Tools', 'Industrial AMC & Maintenance', 'Timely Dispatch & Logistics'],
+        vibes: ['Consistent Industrial Grade Quality', 'Competitive Wholesale Rates', 'On-Schedule Dispatch', 'Strong Technical Support', 'Reliable B2B Partner']
+      },
+      19: {
+        items: ['Healthy Indoor & Outdoor Plants', 'Organic Seeds & Bio-Fertiliser', 'Balcony & Lawn Landscaping', 'Drip Irrigation & Garden Tools', 'Regular Garden Maintenance'],
+        vibes: ['Lush Healthy Plants', 'Expert Plant Care Tips', 'Eco-Friendly Organic Range', 'Fair Nursery Prices', 'Beautiful Green Makeover']
+      },
+      20: {
+        items: ['High-Speed Broadband & Wi-Fi', 'Express Document & Print Service', 'Online Application & CSC Help', 'Verified Domestic & Care Staff', 'Safe Packing & Courier'],
+        vibes: ['Super Fast Turnaround', 'Helpful & Patient Staff', 'Reliable Connectivity', 'Affordable Service Charges', 'Convenient Local Access']
+      },
+      21: {
+        items: ['Authentic Pooja Samagri Kit', 'Fresh Garland & Floral Decor', 'Vastu & Astrology Consultation', 'Community Hall & Ceremony Setup', 'Spiritual Books & Brassware'],
+        vibes: ['Pure & Authentic Items', 'Peaceful & Respectful Vibe', 'Insightful Guidance', 'Well-Organized Arrangements', 'Warm Community Spirit']
+      },
+      22: {
+        items: ['Dedicated Desk & Meeting Room', 'Corporate Training Workshop', 'Commercial Facility & Safety Setup', 'Solar & EV Charging Solution', 'Environmental & Water Testing'],
+        vibes: ['Enterprise-Grade Infrastructure', 'Professional Support Team', 'Compliance & Safety First', 'Seamless Operations', 'Future-Ready Solutions']
+      },
+      23: {
+        items: ['Citizen Counter Assistance', 'Document Verification & Renewal', 'Public Banking & Postal Service', 'Utility & Municipal Support', 'Information & Helpdesk Guidance'],
+        vibes: ['Helpful Counter Officials', 'Clear Step-by-Step Guidance', 'Organized Queue System', 'Timely Processing', 'Clean Public Facility']
+      }
+    };
+
+    function getOfferingsForCategory(catName) {
+      if (SPECIFIC_CATEGORY_OFFERINGS[catName]) {
+        return {
+          items: [...SPECIFIC_CATEGORY_OFFERINGS[catName].items],
+          vibes: [...SPECIFIC_CATEGORY_OFFERINGS[catName].vibes]
+        };
+      }
+      const meta = CATEGORY_MAP[catName];
+      const secId = meta ? meta.sectorId : 1;
+      const fallback = SECTOR_FALLBACK_OFFERINGS[secId] || SECTOR_FALLBACK_OFFERINGS[1];
+      // Customize the first two items with the specific category name so every single one of the 662 categories feels bespoke
+      const singular = catName.replace(/s$/i, '');
+      const customItems = [
+        `${singular} Signature Package`,
+        `Premium ${catName} Consultation`,
+        ...fallback.items.slice(1, 5)
+      ];
+      return {
+        items: customItems,
+        vibes: [...fallback.vibes]
+      };
+    }
+
+    const PRESET_TEMPLATES = {
+      bengali: {
+        name: 'Koshe Kosha Heritage Kitchen',
+        googleLink: 'https://www.google.com/maps/search/?api=1&query=Koshe+Kosha+Bengali+Restaurant',
+        entityType: 'business',
+        sectorFilter: '1',
+        category: 'Bengali Restaurants',
+        customSpecialty: 'Authentic Kolkata Kosha Mangsho, Bhapa Ilish & Zamindari Thali',
+        items: ['Kosha Mangsho', 'Bhapa Ilish', 'Chingri Malai Curry', 'Basanti Pulao', 'Luchi & Cholar Dal', 'Baked Mishti Doi'],
+        selectedItems: ['Kosha Mangsho', 'Chingri Malai Curry'],
+        selectedVibes: ['Authentic Bengali Flavors', 'Warm Hospitality']
+      },
+      cafe: {
+        name: 'Aroma Craft Coffee & Bakehouse',
+        googleLink: 'https://search.google.com/local/writereview?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4',
+        entityType: 'business',
+        sectorFilter: '1',
+        category: 'Cafes',
+        customSpecialty: 'Single-Origin Pour Over & Artisan Croissants',
+        items: ['Artisan Cold Brew', 'Almond Croissant', 'Hazelnut Cappuccino', 'Grilled Pesto Sandwich', 'Belgian Chocolate Waffle'],
+        selectedItems: ['Artisan Cold Brew', 'Almond Croissant'],
+        selectedVibes: ['Cozy Ambience', 'Freshly Brewed Coffee']
+      },
+      salon: {
+        name: 'Aura Luxe Unisex Salon & Studio',
+        googleLink: 'https://www.google.com/maps/search/?api=1&query=Aura+Luxe+Salon+and+Spa',
+        entityType: 'service',
+        sectorFilter: '2',
+        category: 'Unisex Salons',
+        customSpecialty: 'Organic Hair Colour & Korean Glass Skin Facials',
+        items: ['Layered Haircut & Styling', 'HydraFacial Glow Treatment', 'Keratin Hair Spa', 'Beard Grooming & Detan', 'Global Hair Colour'],
+        selectedItems: ['HydraFacial Glow Treatment', 'Layered Haircut & Styling'],
+        selectedVibes: ['Skilled Stylists', 'Sanitized Tools']
+      },
+      dental: {
+        name: 'SmileCraft Multispeciality Dental Clinic',
+        googleLink: 'https://www.google.com/maps/search/?api=1&query=SmileCraft+Dental+Clinic',
+        entityType: 'service',
+        sectorFilter: '3',
+        category: 'Dental Clinics',
+        customSpecialty: 'Painless Laser Dentistry, RCT & Aligners',
+        items: ['Painless Root Canal (RCT)', 'Ultrasonic Scaling & Polishing', 'Laser Teeth Whitening', 'Dental Implants', 'Clear Aligners Consult'],
+        selectedItems: ['Ultrasonic Scaling & Polishing'],
+        selectedVibes: ['Painless Treatment', 'Gentle & Caring Doctor']
+      },
+      electronics: {
+        name: 'PulseTech Smartphone & Gadget Showroom',
+        googleLink: 'https://www.google.com/maps/search/?api=1&query=PulseTech+Gadget+Store',
+        entityType: 'business',
+        sectorFilter: '5',
+        category: 'Mobile Phone Stores',
+        customSpecialty: 'Flagship 5G Smartphones, Audio & Instant Exchange',
+        items: ['5G Flagship Smartphone', 'TWS Noise-Cancelling Earbuds', 'Exchange Upgrade Offer', 'Tempered Glass & Armor Case', 'Fast Adapter & Cable'],
+        selectedItems: ['5G Flagship Smartphone', 'TWS Noise-Cancelling Earbuds'],
+        selectedVibes: ['Sealed Genuine Stock', 'Best Exchange Valuation']
+      }
+    };
+
+    const TONE_MODES = [
+      { id: 'warm', label: 'Natural & Warm' },
+      { id: 'story', label: 'Detailed & Expressive' },
+      { id: 'short', label: 'Short & Punchy' },
+      { id: 'enthusiastic', label: 'Super Enthusiastic' }
+    ];
+
+    // =========================================================================
+    // 2. APPLICATION STATE
+    // =========================================================================
+    let state = {
+      name: PRESET_TEMPLATES.bengali.name,
+      googleLink: PRESET_TEMPLATES.bengali.googleLink,
+      entityType: PRESET_TEMPLATES.bengali.entityType, // 'business' | 'service'
+      showAllSectors: true,
+      sectorFilter: 'all', // 'all' or '1'..'23'
+      categorySearch: '',
+      category: PRESET_TEMPLATES.bengali.category,
+      customSpecialty: PRESET_TEMPLATES.bengali.customSpecialty,
+      items: [...PRESET_TEMPLATES.bengali.items],
+      // Customer selections
+      selectedItems: [...PRESET_TEMPLATES.bengali.selectedItems],
+      selectedVibes: [...PRESET_TEMPLATES.bengali.selectedVibes],
+      customerKeyword: '',
+      stars: 5,
+      toneIndex: 0,
+      variationSeed: 0,
+      qrMode: 'smart', // 'smart' | 'direct'
+      viewMode: 'split' // 'split' | 'merchant' | 'customer'
+    };
+
+    // =========================================================================
+    // 3. ZERO-BACKEND URL STATE ENCODING / DECODING
+    // =========================================================================
+    function encodeMerchantConfigToUrl() {
+      const compactPayload = {
+        n: state.name,
+        g: state.googleLink,
+        e: state.entityType,
+        c: state.category,
+        s: state.customSpecialty,
+        i: state.items
+      };
+      try {
+        const jsonStr = JSON.stringify(compactPayload);
+        const encoded = btoa(encodeURIComponent(jsonStr));
+        const base = window.location.href.split('#')[0].split('?')[0];
+        const safeBase = (base.startsWith('http://') || base.startsWith('https://'))
+          ? base
+          : 'https://swift-review.github.io/scan/';
+        return safeBase + '#customer?cfg=' + encoded;
+      } catch (err) {
+        return 'https://swift-review.github.io/scan/#customer';
+      }
+    }
+
+    function loadConfigFromUrlIfPresent() {
+      try {
+        const hash = window.location.hash || '';
+        const search = window.location.search || '';
+        const combined = hash + '&' + search;
+        const match = combined.match(/[?&]cfg=([^&]+)/);
+        if (match && match[1]) {
+          const decodedJson = decodeURIComponent(atob(match[1]));
+          const parsed = JSON.parse(decodedJson);
+          if (parsed && parsed.n) {
+            state.name = parsed.n;
+            state.googleLink = parsed.g || state.googleLink;
+            state.entityType = parsed.e === 'service' ? 'service' : 'business';
+            state.category = parsed.c || state.category;
+            state.customSpecialty = parsed.s || '';
+            if (Array.isArray(parsed.i) && parsed.i.length > 0) {
+              state.items = parsed.i;
+              state.selectedItems = [parsed.i[0]];
+            }
+            state.viewMode = 'customer';
+          }
+        }
+      } catch (e) {
+        // Ignore malformed URL hash
+      }
+    }
+
+    // =========================================================================
+    // 4. SMART NATURAL REVIEW ENGINE (USES ALL 3 MERCHANT FACTORS + CUSTOMER INPUT)
+    // =========================================================================
+    function formatNaturalList(arr) {
+      if (!arr || arr.length === 0) return '';
+      if (arr.length === 1) return arr[0];
+      if (arr.length === 2) return arr[0] + ' and ' + arr[1];
+      return arr.slice(0, -1).join(', ') + ', and ' + arr[arr.length - 1];
+    }
+
+    function singularizeCategory(catName) {
+      const clean = (catName || 'Business').trim();
+      if (clean.endsWith('ies')) return clean.slice(0, -3) + 'y';
+      if (clean.endsWith('ses') || clean.endsWith('ches')) return clean.slice(0, -2);
+      if (clean.endsWith('s') && !clean.endsWith('ss')) return clean.slice(0, -1);
+      return clean;
+    }
+
+    function generateSmartReview() {
+      const bizName = (state.name || 'this place').trim();
+      const isService = state.entityType === 'service';
+      const categoryName = (state.category || (isService ? 'Service Provider' : 'Business')).trim();
+      const singularCat = singularizeCategory(categoryName).toLowerCase();
+      const specialty = (state.customSpecialty || '').trim();
+      const chosenItems = state.selectedItems.length > 0
+        ? state.selectedItems
+        : (state.items.length > 0 ? [state.items[0]] : [isService ? 'their signature service' : 'their signature offerings']);
+      const itemsText = formatNaturalList(chosenItems);
+      const vibes = state.selectedVibes.map(v => v.toLowerCase());
+      const vibesText = formatNaturalList(vibes);
+      const keywordRaw = (state.customerKeyword || '').trim();
+      const tone = TONE_MODES[state.toneIndex % TONE_MODES.length].id;
+      const v = state.variationSeed % 5;
+
+      const categoryContextPhrase = specialty
+        ? `known for ${specialty}`
+        : (isService ? `as a trusted ${singularCat} in the city` : `as a standout ${singularCat} in town`);
+
+      let keywordSentence = '';
+      if (keywordRaw) {
+        const cleanKw = keywordRaw.replace(/[.!]+$/, '');
+        const kwTemplates = [
+          `Special mention for ${cleanKw}—it really made my experience stand out.`,
+          `I especially appreciated ${cleanKw}, which made the whole visit even better.`,
+          `Also have to highlight ${cleanKw}; thoughtful touches like that make all the difference!`,
+          `Above all, ${cleanKw} really sealed the 5-star rating for me.`,
+          `What impressed me most was ${cleanKw}.`
+        ];
+        keywordSentence = ' ' + kwTemplates[v % kwTemplates.length];
+      }
+
+      let vibeSentence = '';
+      if (vibes.length > 0) {
+        const vibeTemplates = [
+          `Everything from the ${vibesText} to the overall professionalism was spot-on.`,
+          `You immediately notice the ${vibesText} right from the start.`,
+          `The ${vibesText} really sets them apart from others nearby.`,
+          `Loved the ${vibesText}—they genuinely care about every customer.`,
+          `They nailed the ${vibesText} from start to finish.`
+        ];
+        vibeSentence = ' ' + vibeTemplates[(v + 1) % vibeTemplates.length];
+      }
+
+      let review = '';
+      if (tone === 'short') {
+        const shortTemplates = isService ? [
+          `5 stars for ${bizName}! Opted for their ${itemsText} and couldn't be happier with the outcome.${vibeSentence}${keywordSentence} Easily the best ${singularCat} experience I've had—highly recommend!`,
+          `Had a fantastic experience at ${bizName} for ${itemsText}.${vibeSentence}${keywordSentence} If you're looking for a reliable ${singularCat} ${categoryContextPhrase}, this is the place!`,
+          `Super impressed with ${bizName}! Got ${itemsText} done today and the service quality was top-class.${vibeSentence}${keywordSentence} Will definitely recommend to friends and family!`
+        ] : [
+          `Absolutely loved visiting ${bizName}! Tried the ${itemsText} and the quality was incredible.${vibeSentence}${keywordSentence} Hands down my favorite ${singularCat} in the city!`,
+          `5/5 experience at ${bizName}! Picked up their ${itemsText} today and it exceeded every expectation.${vibeSentence}${keywordSentence} A must-visit ${singularCat} ${categoryContextPhrase}!`,
+          `So glad I visited ${bizName}! The ${itemsText} was top-tier.${vibeSentence}${keywordSentence} Wonderful ${singularCat} that I'll happily recommend to everyone.`
+        ];
+        review = shortTemplates[v % shortTemplates.length];
+      } else if (tone === 'story') {
+        const storyTemplates = isService ? [
+          `I visited ${bizName} recently for ${itemsText}, and the entire experience from start to finish was seamless. Finding a ${singularCat} ${categoryContextPhrase} that takes the time to get every detail right is rare.${vibeSentence}${keywordSentence} I walked away completely satisfied and will gladly recommend them!`,
+          `Choosing the right ${singularCat} matters a lot, and ${bizName} proved to be an outstanding choice. I came in for ${itemsText} and was genuinely impressed by how attentive and skilled the team was.${vibeSentence}${keywordSentence} Truly a 5-star service provider!`,
+          `From the moment I reached out to ${bizName} for ${itemsText}, I knew I was in capable hands. They have built a great reputation ${categoryContextPhrase}, and it shows in their dedication.${vibeSentence}${keywordSentence} Looking forward to coming back again!`
+        ] : [
+          `Stopped by ${bizName} recently for ${itemsText}—honestly one of the best experiences I've had in a long time! As a ${singularCat} ${categoryContextPhrase}, they clearly put tremendous pride into everything they offer.${vibeSentence}${keywordSentence} Definitely my new go-to spot!`,
+          `I've been searching for a dependable ${singularCat} ${categoryContextPhrase}, and ${bizName} delivered on every front. I went for the ${itemsText}, and you can immediately tell how much care goes into the quality.${vibeSentence}${keywordSentence} Can't wait to visit again soon!`,
+          `Whether you're visiting for the first time or a regular, ${bizName} makes you feel completely welcome. I got the ${itemsText} and was thoroughly impressed by the quality and value.${vibeSentence}${keywordSentence} Easily a 5-star gem in our neighborhood!`
+        ];
+        review = storyTemplates[v % storyTemplates.length];
+      } else if (tone === 'enthusiastic') {
+        const enthTemplates = isService ? [
+          `Hands down the best ${singularCat} around! 🌟 Huge shoutout to ${bizName} for an amazing job with ${itemsText}!${vibeSentence}${keywordSentence} If you want an expert team ${categoryContextPhrase}, look no further—10/10 recommend!`,
+          `What a brilliant experience at ${bizName}! Came in for ${itemsText} and the results are beyond amazing!${vibeSentence}${keywordSentence} Best ${singularCat} in town—thank you so much!`,
+          `Couldn't ask for better service than what I received at ${bizName}! Booked ${itemsText} and everything was flawless.${vibeSentence}${keywordSentence} Easily deserves all 5 stars!`
+        ] : [
+          `Obsessed with ${bizName}! 🌟 Tried their ${itemsText} today and it was phenomenal!${vibeSentence}${keywordSentence} Easily the best ${singularCat} ${categoryContextPhrase}—do yourself a favor and check them out!`,
+          `Five stars isn't enough for ${bizName}! Got the ${itemsText} and every bit of it was perfection.${vibeSentence}${keywordSentence} Such an awesome ${singularCat}—already telling all my friends and family!`,
+          `What a fantastic find! Visited ${bizName} for ${itemsText} and was completely blown away by the quality!${vibeSentence}${keywordSentence} My new favorite ${singularCat}!`
+        ];
+        review = enthTemplates[v % enthTemplates.length];
+      } else {
+        const warmTemplates = isService ? [
+          `Had a wonderful experience at ${bizName}! I came in for ${itemsText} and was really impressed by how smooth and professional everything was.${vibeSentence}${keywordSentence} It's rare to find a ${singularCat} ${categoryContextPhrase} this consistent. Highly recommended!`,
+          `Really happy with the service at ${bizName}. I opted for ${itemsText}, and the team went above and beyond to make sure everything was handled with care.${vibeSentence}${keywordSentence} Definitely a 5-star ${singularCat} experience!`,
+          `Five stars all the way for ${bizName}! Got ${itemsText} done today and the quality of work speaks for itself.${vibeSentence}${keywordSentence} If you need a trustworthy ${singularCat} ${categoryContextPhrase}, you'll be in great hands here.`
+        ] : [
+          `Had such a great experience at ${bizName}! I got the ${itemsText} and the quality was genuinely top-notch.${vibeSentence}${keywordSentence} As a ${singularCat} ${categoryContextPhrase}, they really know how to delight their customers. Will definitely be back soon!`,
+          `Really enjoyed my visit to ${bizName} today. Tried their ${itemsText} and loved every bit of it.${vibeSentence}${keywordSentence} It's wonderful having such a reliable ${singularCat} right here—highly recommend stopping by!`,
+          `So happy I visited ${bizName}! Picked up the ${itemsText} and everything was fresh, well-crafted, and reasonably priced.${vibeSentence}${keywordSentence} Easily a 5-star ${singularCat} ${categoryContextPhrase}!`
+        ];
+        review = warmTemplates[v % warmTemplates.length];
+      }
+
+      return review;
+    }
+
+    // =========================================================================
+    // 5. QR CODE RENDERING & PNG DOWNLOAD
+    // =========================================================================
+    function getActiveQrUrl() {
+      if (state.qrMode === 'direct') {
+        return formatGoogleReviewUrl(state.googleLink, state.name);
+      }
+      return encodeMerchantConfigToUrl();
+    }
+
+    function formatGoogleReviewUrl(rawLink, bizName) {
+      const trimmed = (rawLink || '').trim();
+      if (!trimmed) {
+        return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((bizName || 'Business') + ' reviews');
+      }
+      if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+        return trimmed;
+      }
+      if (/^[A-Za-z0-9_-]{15,}$/.test(trimmed)) {
+        return 'https://search.google.com/local/writereview?placeid=' + encodeURIComponent(trimmed);
+      }
+      return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(trimmed);
+    }
+
+    function renderQrCode() {
+      const wrap = document.getElementById('qrCodeCanvasWrap');
+      const targetUrl = getActiveQrUrl();
+      document.getElementById('shareUrlPreview').value = targetUrl;
+      document.getElementById('qrCardBusinessName').textContent = state.name || 'Your Business Name';
+      const catMeta = CATEGORY_MAP[state.category];
+      document.getElementById('qrCardCategorySub').textContent = catMeta
+        ? `#${catMeta.num} ${catMeta.name}`
+        : state.category;
+
+      const hintEl = document.getElementById('qrModeHintText');
+      if (state.qrMode === 'direct') {
+        hintEl.textContent = 'Direct Google Mode: Scanning this QR with any smartphone camera immediately opens your Google Business Review page.';
+      } else {
+        hintEl.textContent = 'Smart Review Generator Mode: Encodes your business name, category, and offerings right inside the link (#customer?cfg=...) with zero backend.';
+      }
+
+      wrap.innerHTML = '';
+      if (typeof qrcode === 'function') {
+        try {
+          const qr = qrcode(0, 'M');
+          qr.addData(targetUrl);
+          qr.make();
+          const svgTag = qr.createSvgTag({ cellSize: 3, margin: 1, scalable: true });
+          wrap.innerHTML = svgTag;
+          const svgEl = wrap.querySelector('svg');
+          if (svgEl) {
+            svgEl.setAttribute('width', '144');
+            svgEl.setAttribute('height', '144');
+            svgEl.classList.add('w-36', 'h-36');
+          }
+          return;
+        } catch (err) {
+          // Fall through to canvas fallback
+        }
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 144;
+      canvas.height = 144;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, 144, 144);
+      ctx.fillStyle = '#0f172a';
+      const modules = 21;
+      const cell = Math.floor(144 / modules);
+      const drawFinder = (ox, oy) => {
+        ctx.fillRect(ox * cell, oy * cell, 7 * cell, 7 * cell);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect((ox + 1) * cell, (oy + 1) * cell, 5 * cell, 5 * cell);
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect((ox + 2) * cell, (oy + 2) * cell, 3 * cell, 3 * cell);
+      };
+      drawFinder(0, 0);
+      drawFinder(modules - 7, 0);
+      drawFinder(0, modules - 7);
+      let hash = 2166136261;
+      for (let i = 0; i < targetUrl.length; i++) {
+        hash ^= targetUrl.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      for (let r = 0; r < modules; r++) {
+        for (let c = 0; c < modules; c++) {
+          const inFinder = (r < 8 && c < 8) || (r < 8 && c >= modules - 8) || (r >= modules - 8 && c < 8);
+          if (!inFinder) {
+            const bit = ((hash ^ (r * 31 + c * 17)) & 1) === 1;
+            if (bit) ctx.fillRect(c * cell, r * cell, cell, cell);
+          }
+        }
+      }
+      wrap.appendChild(canvas);
+    }
+
+    function downloadStandeePng() {
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 780;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 0, 780);
+      grad.addColorStop(0, '#0f172a');
+      grad.addColorStop(0.5, '#1e1b4b');
+      grad.addColorStop(1, '#0f172a');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 600, 780);
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 20px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SWIFT REVIEW • LOVED YOUR VISIT?', 300, 70);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '800 30px Inter, sans-serif';
+      const title = (state.name || 'Our Business').slice(0, 34);
+      ctx.fillText(title, 300, 120);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.roundRect(130, 160, 340, 340, 28);
+      ctx.fill();
+
+      const svgEl = document.querySelector('#qrCodeCanvasWrap svg');
+      const finalizeDownload = () => {
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 36px Inter, sans-serif';
+        ctx.fillText('★ ★ ★ ★ ★', 300, 565);
+
+        ctx.fillStyle = '#e2e8f0';
+        ctx.font = '600 20px Inter, sans-serif';
+        ctx.fillText('Scan with your phone camera to generate', 300, 620);
+        ctx.fillText('& post a 5-star review in 10 seconds!', 300, 650);
+
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '500 15px Inter, sans-serif';
+        ctx.fillText('Powered by Swift Review • ' + state.category, 300, 715);
+
+        const link = document.createElement('a');
+        link.download = 'swift-review-' + (state.name || 'business').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-qr.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showToast('Downloaded Swift Review QR Standee PNG!');
+      };
+
+      if (svgEl) {
+        const svgData = new XMLSerializer().serializeToString(svgEl);
+        const img = new Image();
+        img.onload = function () {
+          ctx.drawImage(img, 155, 185, 290, 290);
+          finalizeDownload();
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+      } else {
+        finalizeDownload();
+      }
+    }
+
+    // =========================================================================
+    // 6. UI RENDERING & SYNCHRONIZATION (WITH ALL 23 SECTORS & 662 CATEGORIES)
+    // =========================================================================
+    function populateSectorSelect() {
+      const sectorSelect = document.getElementById('sectorSelect');
+      sectorSelect.innerHTML = '';
+      const allOpt = document.createElement('option');
+      allOpt.value = 'all';
+      allOpt.textContent = 'All 23 Indian City Sectors (662 Categories)';
+      sectorSelect.appendChild(allOpt);
+
+      SECTORS_DATA.forEach(sec => {
+        if (!state.showAllSectors && sec.defaultEntity !== state.entityType) {
+          return;
+        }
+        const opt = document.createElement('option');
+        opt.value = String(sec.sectorId);
+        opt.textContent = `${sec.sectorName} (${sec.categories.length})`;
+        if (String(sec.sectorId) === String(state.sectorFilter)) {
+          opt.selected = true;
+        }
+        sectorSelect.appendChild(opt);
+      });
+    }
+
+    function populateCategoryDropdown() {
+      const catSelect = document.getElementById('categorySelect');
+      catSelect.innerHTML = '';
+      const query = (state.categorySearch || '').trim().toLowerCase();
+      let totalMatches = 0;
+      let firstMatchedCategory = null;
+      let currentCategoryFound = false;
+
+      SECTORS_DATA.forEach(sec => {
+        if (!state.showAllSectors && sec.defaultEntity !== state.entityType) {
+          return;
+        }
+        if (state.sectorFilter !== 'all' && String(sec.sectorId) !== String(state.sectorFilter)) {
+          return;
+        }
+
+        const matchedCats = sec.categories.filter(cat => {
+          if (!query) return true;
+          return (
+            cat.name.toLowerCase().includes(query) ||
+            String(cat.num) === query.replace('#', '') ||
+            cat.label.toLowerCase().includes(query) ||
+            sec.sectorName.toLowerCase().includes(query)
+          );
+        });
+
+        if (matchedCats.length > 0) {
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = sec.sectorName;
+          matchedCats.forEach(cat => {
+            totalMatches += 1;
+            if (!firstMatchedCategory) firstMatchedCategory = cat.name;
+            const opt = document.createElement('option');
+            opt.value = cat.name;
+            opt.textContent = `${cat.num}. ${cat.name}`;
+            if (cat.name === state.category) {
+              opt.selected = true;
+              currentCategoryFound = true;
+            }
+            optgroup.appendChild(opt);
+          });
+          catSelect.appendChild(optgroup);
+        }
+      });
+
+      document.getElementById('categoryMatchCountBadge').textContent = `${totalMatches} of 662 categories`;
+
+      if (!currentCategoryFound && firstMatchedCategory) {
+        state.category = firstMatchedCategory;
+        catSelect.value = firstMatchedCategory;
+      }
+    }
+
+    function syncAllUI(regenerateComment = true) {
+      // 1. Merchant Inputs
+      const nameInput = document.getElementById('merchantNameInput');
+      if (document.activeElement !== nameInput) nameInput.value = state.name;
+
+      const googleInput = document.getElementById('googleLinkInput');
+      if (document.activeElement !== googleInput) googleInput.value = state.googleLink;
+
+      const customSpecInput = document.getElementById('customCategoryInput');
+      if (document.activeElement !== customSpecInput) customSpecInput.value = state.customSpecialty;
+
+      document.getElementById('showAllCategoriesCheckbox').checked = state.showAllSectors;
+
+      // 2. Entity Type Toggle Buttons
+      const bizBtn = document.getElementById('entityBusinessBtn');
+      const srvBtn = document.getElementById('entityServiceBtn');
+      if (state.entityType === 'business') {
+        bizBtn.className = 'entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/50 text-left transition';
+        srvBtn.className = 'entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-left transition';
+        document.getElementById('categoryLabelText').textContent = 'Type of Business';
+      } else {
+        srvBtn.className = 'entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 border-emerald-600 bg-emerald-50/50 text-left transition';
+        bizBtn.className = 'entity-toggle-btn flex items-center gap-3 p-3 rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-left transition';
+        document.getElementById('categoryLabelText').textContent = 'Type of Services';
+      }
+
+      // 3. Populate Sector & 662 Categories Dropdowns
+      populateSectorSelect();
+      populateCategoryDropdown();
+
+      // 4. Render Merchant Offerings Chips
+      const merchantItemsWrap = document.getElementById('merchantItemsContainer');
+      merchantItemsWrap.innerHTML = '';
+      if (state.items.length === 0) {
+        merchantItemsWrap.innerHTML = '<span class="text-xs text-slate-400 italic">No items/services added yet. Add one above or click "+ Load Suggested Offerings".</span>';
+      } else {
+        state.items.forEach((item, idx) => {
+          const chip = document.createElement('div');
+          chip.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-300 text-xs font-medium text-slate-800 shadow-sm';
+          const textSpan = document.createElement('span');
+          textSpan.textContent = item;
+          const delBtn = document.createElement('button');
+          delBtn.type = 'button';
+          delBtn.className = 'text-slate-400 hover:text-rose-600 font-bold ml-0.5';
+          delBtn.textContent = '×';
+          delBtn.addEventListener('click', () => {
+            const removed = state.items[idx];
+            state.items.splice(idx, 1);
+            state.selectedItems = state.selectedItems.filter(x => x !== removed);
+            syncAllUI(true);
+          });
+          chip.appendChild(textSpan);
+          chip.appendChild(delBtn);
+          merchantItemsWrap.appendChild(chip);
+        });
+      }
+
+      // 5. Render Customer Phone Header
+      document.getElementById('custEntityBadge').textContent = state.entityType === 'service' ? 'Service Provider' : 'Business';
+      const catMeta = CATEGORY_MAP[state.category];
+      document.getElementById('custCategoryBadge').textContent = catMeta
+        ? `#${catMeta.num} ${catMeta.name}`
+        : state.category;
+      document.getElementById('custBusinessTitle').textContent = state.name || 'Your Business Name';
+
+      // 6. Render Customer Selectable Offerings (Products / Services)
+      const custOfferingsWrap = document.getElementById('customerOfferingsList');
+      custOfferingsWrap.innerHTML = '';
+      state.items.forEach(item => {
+        const isSelected = state.selectedItems.includes(item);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = isSelected
+          ? 'px-3 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white shadow-sm transition flex items-center gap-1'
+          : 'px-3 py-1.5 rounded-xl text-xs font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 transition';
+        btn.textContent = (isSelected ? '✓ ' : '+ ') + item;
+        btn.addEventListener('click', () => {
+          if (state.selectedItems.includes(item)) {
+            state.selectedItems = state.selectedItems.filter(x => x !== item);
+          } else {
+            state.selectedItems.push(item);
+          }
+          syncAllUI(true);
+        });
+        custOfferingsWrap.appendChild(btn);
+      });
+      document.getElementById('selectedCountBadge').textContent = `${state.selectedItems.length} selected`;
+
+      // 7. Render Experience Vibe Tags based on Category
+      const catOfferings = getOfferingsForCategory(state.category);
+      const vibeWrap = document.getElementById('vibeTagsContainer');
+      vibeWrap.innerHTML = '';
+      (catOfferings.vibes || []).forEach(vibe => {
+        const active = state.selectedVibes.includes(vibe);
+        const vBtn = document.createElement('button');
+        vBtn.type = 'button';
+        vBtn.className = active
+          ? 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300 transition'
+          : 'px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 transition';
+        vBtn.textContent = (active ? '★ ' : '') + vibe;
+        vBtn.addEventListener('click', () => {
+          if (state.selectedVibes.includes(vibe)) {
+            state.selectedVibes = state.selectedVibes.filter(x => x !== vibe);
+          } else {
+            state.selectedVibes.push(vibe);
+          }
+          syncAllUI(true);
+        });
+        vibeWrap.appendChild(vBtn);
+      });
+
+      // 8. Star Rating Bar
+      const starBtns = document.querySelectorAll('.star-btn');
+      starBtns.forEach(btn => {
+        const s = parseInt(btn.getAttribute('data-star'), 10);
+        btn.className = s <= state.stars
+          ? 'star-btn text-2xl text-amber-400 hover:scale-110 transition'
+          : 'star-btn text-2xl text-slate-300 hover:scale-110 transition';
+      });
+      const captions = {
+        5: '5.0 ★ — Loved it! Highly Recommended',
+        4: '4.0 ★ — Great Experience!',
+        3: '3.0 ★ — Good Overall',
+        2: '2.0 ★ — Could Be Better',
+        1: '1.0 ★ — Needs Improvement'
+      };
+      document.getElementById('starRatingCaption').textContent = captions[state.stars] || captions[5];
+
+      // 9. Tone Pill & Generated Review Comment
+      const currentTone = TONE_MODES[state.toneIndex % TONE_MODES.length];
+      document.getElementById('reviewTonePill').textContent = currentTone.label;
+
+      if (regenerateComment) {
+        const generated = generateSmartReview();
+        document.getElementById('generatedReviewTextarea').value = generated;
+      }
+
+      // 10. Context Breakdown showing the 3 Factors
+      const breakdownEl = document.getElementById('contextBreakdownBar');
+      const factor1 = state.entityType === 'service' ? 'Service Provider' : 'Business';
+      const factor2 = state.category;
+      const factor3 = state.selectedItems.length > 0 ? state.selectedItems.join(', ') : 'Default Offering';
+      breakdownEl.innerHTML = `
+        <span class="font-semibold text-slate-700">Auto-Crafted From:</span>
+        <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-medium">1. ${factor1}</span>
+        <span>→</span>
+        <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-medium">2. ${factor2}</span>
+        <span>→</span>
+        <span class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-medium truncate max-w-[180px]">3. ${factor3}</span>
+      `;
+
+      // 11. QR Mode Buttons & QR Code
+      const smartBtn = document.getElementById('qrModeSmartBtn');
+      const directBtn = document.getElementById('qrModeDirectBtn');
+      if (state.qrMode === 'smart') {
+        smartBtn.className = 'px-2.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-sm transition';
+        directBtn.className = 'px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition';
+      } else {
+        directBtn.className = 'px-2.5 py-1.5 rounded-lg bg-white text-slate-900 font-semibold shadow-sm transition';
+        smartBtn.className = 'px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition';
+      }
+      renderQrCode();
+
+      // 12. View Mode Layout
+      applyViewModeLayout();
+    }
+
+    function applyViewModeLayout() {
+      const merchantPanel = document.getElementById('merchantPanel');
+      const customerPanel = document.getElementById('customerPanel');
+      const mainGrid = document.getElementById('mainGrid');
+      const tabSplit = document.getElementById('tabSplitBtn');
+      const tabMerchant = document.getElementById('tabMerchantBtn');
+      const tabCustomer = document.getElementById('tabCustomerBtn');
+
+      const activeClass = 'px-3 py-1.5 rounded-lg transition-all bg-white text-slate-900 shadow-sm font-semibold';
+      const inactiveClass = 'px-3 py-1.5 rounded-lg transition-all text-slate-600 hover:text-slate-900';
+
+      tabSplit.className = state.viewMode === 'split' ? activeClass : inactiveClass;
+      tabMerchant.className = state.viewMode === 'merchant' ? activeClass : inactiveClass;
+      tabCustomer.className = state.viewMode === 'customer' ? activeClass : inactiveClass;
+
+      if (state.viewMode === 'split') {
+        merchantPanel.classList.remove('hidden');
+        customerPanel.classList.remove('hidden');
+        merchantPanel.className = 'lg:col-span-7 space-y-6';
+        customerPanel.className = 'lg:col-span-5 flex flex-col items-center';
+        mainGrid.className = 'grid grid-cols-1 lg:grid-cols-12 gap-6 items-start';
+      } else if (state.viewMode === 'merchant') {
+        merchantPanel.classList.remove('hidden');
+        customerPanel.classList.add('hidden');
+        merchantPanel.className = 'max-w-3xl mx-auto w-full space-y-6';
+        mainGrid.className = 'block';
+      } else {
+        merchantPanel.classList.add('hidden');
+        customerPanel.classList.remove('hidden');
+        customerPanel.className = 'w-full flex flex-col items-center';
+        mainGrid.className = 'block';
+      }
+    }
+
+    // =========================================================================
+    // 7. CLIPBOARD HELPER & TOAST
+    // =========================================================================
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const banner = document.getElementById('toastBanner');
+      document.getElementById('toastText').textContent = msg;
+      banner.classList.remove('hidden');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        banner.classList.add('hidden');
+      }, 2800);
+    }
+
+    // =========================================================================
+    // 8. EVENT LISTENERS
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      loadConfigFromUrlIfPresent();
+
+      // View mode tabs
+      document.getElementById('tabSplitBtn').addEventListener('click', () => {
+        state.viewMode = 'split';
+        applyViewModeLayout();
+      });
+      document.getElementById('tabMerchantBtn').addEventListener('click', () => {
+        state.viewMode = 'merchant';
+        applyViewModeLayout();
+      });
+      document.getElementById('tabCustomerBtn').addEventListener('click', () => {
+        state.viewMode = 'customer';
+        applyViewModeLayout();
+      });
+
+      // Top 5-step interactive pills
+      document.querySelectorAll('.step-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          const stepNum = pill.getAttribute('data-step-action');
+          if (stepNum === '1') {
+            document.getElementById('standeeCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast('Step 1: Customer scans your Swift Review QR code!');
+          } else if (stepNum === '2') {
+            document.getElementById('customerOfferingsList').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast('Step 2: Customer taps what they bought or experienced.');
+          } else if (stepNum === '3') {
+            state.variationSeed += 1;
+            syncAllUI(true);
+            document.getElementById('generatedReviewTextarea').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            showToast('Step 3: Smart 5★ review generated automatically!');
+          } else if (stepNum === '4' || stepNum === '5') {
+            document.getElementById('postToGoogleBtn').click();
+          }
+        });
+      });
+
+      // Preset buttons
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const key = btn.getAttribute('data-preset');
+          const p = PRESET_TEMPLATES[key];
+          if (p) {
+            state.name = p.name;
+            state.googleLink = p.googleLink;
+            state.entityType = p.entityType;
+            state.sectorFilter = 'all';
+            state.categorySearch = '';
+            document.getElementById('categorySearchInput').value = '';
+            state.category = p.category;
+            state.customSpecialty = p.customSpecialty;
+            state.items = [...p.items];
+            state.selectedItems = [...p.selectedItems];
+            state.selectedVibes = [...p.selectedVibes];
+            state.customerKeyword = '';
+            document.getElementById('customerKeywordInput').value = '';
+            state.variationSeed += 1;
+            syncAllUI(true);
+            showToast(`Loaded "${p.name}" preset!`);
+          }
+        });
+      });
+
+      // Merchant inputs
+      document.getElementById('merchantNameInput').addEventListener('input', e => {
+        state.name = e.target.value;
+        syncAllUI(true);
+      });
+
+      document.getElementById('googleLinkInput').addEventListener('input', e => {
+        state.googleLink = e.target.value;
+        syncAllUI(false);
+      });
+
+      document.getElementById('showAllCategoriesCheckbox').addEventListener('change', e => {
+        state.showAllSectors = e.target.checked;
+        state.sectorFilter = 'all';
+        syncAllUI(true);
+      });
+
+      const applyCategoryDefaults = (catName) => {
+        const meta = CATEGORY_MAP[catName];
+        if (meta) {
+          state.entityType = meta.defaultEntity;
+        }
+        const defaults = getOfferingsForCategory(catName);
+        state.items = [...defaults.items];
+        state.selectedItems = defaults.items.slice(0, 2);
+        state.selectedVibes = defaults.vibes.slice(0, 2);
+      };
+
+      document.getElementById('entityBusinessBtn').addEventListener('click', () => {
+        state.entityType = 'business';
+        if (!state.showAllSectors) {
+          state.sectorFilter = 'all';
+          state.category = 'Fine-Dining Restaurants';
+          applyCategoryDefaults(state.category);
+        }
+        syncAllUI(true);
+      });
+
+      document.getElementById('entityServiceBtn').addEventListener('click', () => {
+        state.entityType = 'service';
+        if (!state.showAllSectors) {
+          state.sectorFilter = 'all';
+          state.category = 'Unisex Salons';
+          applyCategoryDefaults(state.category);
+        }
+        syncAllUI(true);
+      });
+
+      document.getElementById('sectorSelect').addEventListener('change', e => {
+        state.sectorFilter = e.target.value;
+        populateCategoryDropdown();
+        applyCategoryDefaults(state.category);
+        syncAllUI(true);
+      });
+
+      document.getElementById('categorySearchInput').addEventListener('input', e => {
+        state.categorySearch = e.target.value;
+        populateCategoryDropdown();
+        applyCategoryDefaults(state.category);
+        syncAllUI(true);
+      });
+
+      document.getElementById('categorySelect').addEventListener('change', e => {
+        state.category = e.target.value;
+        applyCategoryDefaults(state.category);
+        syncAllUI(true);
+      });
+
+      document.getElementById('customCategoryInput').addEventListener('input', e => {
+        state.customSpecialty = e.target.value;
+        syncAllUI(true);
+      });
+
+      // Add new offering
+      const addOfferingFromInput = () => {
+        const inp = document.getElementById('newItemInput');
+        const val = (inp.value || '').trim();
+        if (!val) return;
+        if (!state.items.includes(val)) {
+          state.items.push(val);
+        }
+        if (!state.selectedItems.includes(val)) {
+          state.selectedItems.push(val);
+        }
+        inp.value = '';
+        syncAllUI(true);
+        showToast(`Added "${val}" to customer options!`);
+      };
+
+      document.getElementById('addItemBtn').addEventListener('click', addOfferingFromInput);
+      document.getElementById('newItemInput').addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addOfferingFromInput();
+        }
+      });
+
+      document.getElementById('loadSuggestedItemsBtn').addEventListener('click', () => {
+        const defaults = getOfferingsForCategory(state.category);
+        defaults.items.forEach(item => {
+          if (!state.items.includes(item)) state.items.push(item);
+        });
+        if (state.selectedItems.length === 0 && state.items.length > 0) {
+          state.selectedItems = [state.items[0]];
+        }
+        syncAllUI(true);
+        showToast('Loaded suggested offerings for ' + state.category);
+      });
+
+      // Explicit Generate Button for QR Code & Shareable Link
+      document.getElementById('generateQrBtn').addEventListener('click', () => {
+        syncAllUI(true);
+        const tsEl = document.getElementById('qrGeneratedTimestamp');
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        tsEl.textContent = `✓ Generated at ${timeStr}`;
+        const qrBox = document.getElementById('qrStudioBox');
+        qrBox.classList.add('ring-2', 'ring-indigo-500');
+        setTimeout(() => qrBox.classList.remove('ring-2', 'ring-indigo-500'), 1400);
+        qrBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        showToast('⚡ Swift Review QR Code & Link generated!');
+      });
+
+      document.getElementById('openGeneratedLinkBtn').addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          state.viewMode = 'customer';
+          applyViewModeLayout();
+        }
+        document.getElementById('customerPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('Opened generated Swift Review customer link!');
+      });
+
+      // QR Mode toggle & actions
+      document.getElementById('qrModeSmartBtn').addEventListener('click', () => {
+        state.qrMode = 'smart';
+        syncAllUI(false);
+      });
+      document.getElementById('qrModeDirectBtn').addEventListener('click', () => {
+        state.qrMode = 'direct';
+        syncAllUI(false);
+      });
+
+      document.getElementById('simulateScanBtn').addEventListener('click', () => {
+        if (window.innerWidth < 1024) {
+          state.viewMode = 'customer';
+          applyViewModeLayout();
+        }
+        document.getElementById('customerPanel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        showToast('📱 QR Scanned! Swift Review Customer Page opened.');
+      });
+
+      document.getElementById('downloadQrPngBtn').addEventListener('click', downloadStandeePng);
+
+      document.getElementById('copyShareUrlBtn').addEventListener('click', () => {
+        const url = getActiveQrUrl();
+        copyTextToClipboard(url);
+        showToast('Swift Review customer link copied to clipboard!');
+      });
+
+      // Customer Phone Controls
+      document.querySelectorAll('.star-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.stars = parseInt(btn.getAttribute('data-star'), 10);
+          syncAllUI(false);
+        });
+      });
+
+      document.getElementById('customerKeywordInput').addEventListener('input', e => {
+        state.customerKeyword = e.target.value;
+        syncAllUI(true);
+      });
+
+      document.getElementById('cycleToneBtn').addEventListener('click', () => {
+        state.toneIndex = (state.toneIndex + 1) % TONE_MODES.length;
+        syncAllUI(true);
+      });
+
+      document.getElementById('regenerateReviewBtn').addEventListener('click', () => {
+        state.variationSeed += 1;
+        syncAllUI(true);
+        showToast('✨ Generated a fresh natural variation!');
+      });
+
+      // Step 4 & 5: Copy Review & Open Google Review Modal
+      document.getElementById('postToGoogleBtn').addEventListener('click', () => {
+        const reviewText = document.getElementById('generatedReviewTextarea').value;
+        copyTextToClipboard(reviewText);
+
+        const formattedGoogleUrl = formatGoogleReviewUrl(state.googleLink, state.name);
+        document.getElementById('modalBusinessName').textContent = state.name || 'Your Business';
+        document.getElementById('modalReviewPreview').textContent = reviewText;
+        document.getElementById('openRealGoogleLink').href = formattedGoogleUrl;
+        document.getElementById('simulatedSuccessBanner').classList.add('hidden');
+        document.getElementById('googleModalBackdrop').classList.remove('hidden');
+      });
+
+      document.getElementById('reCopyModalBtn').addEventListener('click', () => {
+        const reviewText = document.getElementById('generatedReviewTextarea').value;
+        copyTextToClipboard(reviewText);
+        showToast('Review copied to clipboard again!');
+      });
+
+      document.getElementById('simulateFinalPostBtn').addEventListener('click', () => {
+        document.getElementById('successBizName').textContent = state.name || 'this business';
+        document.getElementById('simulatedSuccessBanner').classList.remove('hidden');
+        showToast('🎉 5-Star Review submitted via Swift Review!');
+      });
+
+      document.getElementById('closeGoogleModalBtn').addEventListener('click', () => {
+        document.getElementById('googleModalBackdrop').classList.add('hidden');
+      });
+
+      document.getElementById('googleModalBackdrop').addEventListener('click', e => {
+        if (e.target.id === 'googleModalBackdrop') {
+          document.getElementById('googleModalBackdrop').classList.add('hidden');
+        }
+      });
+
+      // Initial render
+      syncAllUI(true);
+    });
+  </script>
+</body>
+</html>
+```
